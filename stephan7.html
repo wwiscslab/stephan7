@@ -1,0 +1,5471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flavor Haven - Order Food Online</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Keeping all the existing CSS styles as they are */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f8f8; color: #282c3f; }
+    
+    /* HEADER STYLES */
+    .header { 
+      background: white; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+    }
+    
+    .header-top { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 12px 20px;
+      border-bottom: 1px solid #e9e9eb;
+    }
+    
+    .logo-container { 
+      display: flex; 
+      align-items: center; 
+      cursor: pointer;
+    }
+    
+    .logo-img { 
+      height: 40px; 
+      margin-right: 10px; 
+      border-radius: 50%;
+    }
+    
+    .logo-text { 
+      font-size: 22px; 
+      font-weight: 700; 
+      color: #e23744; 
+    }
+    
+    .location-selector { 
+      display: flex; 
+      align-items: center; 
+      background: #f8f8f8; 
+      padding: 8px 15px; 
+      border-radius: 8px; 
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .location-selector:hover {
+      background: #efefef;
+    }
+    
+    .location-icon { 
+      margin-right: 8px; 
+      color: #e23744; 
+    }
+    
+    .location-text { 
+      font-weight: 600; 
+      margin-right: 5px; 
+    }
+    
+    .header-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 15px; 
+    }
+    
+    .search-bar { 
+      position: relative; 
+      width: 400px; 
+    }
+    
+    .search-bar input { 
+      width: 100%; 
+      padding: 10px 15px 10px 40px; 
+      border: 1px solid #d4d5d9; 
+      border-radius: 8px; 
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    
+    .search-bar input:focus {
+      border-color: #e23744;
+    }
+    
+    .search-icon { 
+      position: absolute; 
+      left: 15px; 
+      top: 50%; 
+      transform: translateY(-50%); 
+      color: #7e808c; 
+    }
+    
+    .login-btn, .signup-btn { 
+      padding: 8px 16px; 
+      border-radius: 8px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: all 0.2s;
+      border: none;
+    }
+    
+    .login-btn { 
+      background: transparent; 
+      color: #e23744; 
+      border: 1px solid #e23744;
+    }
+    
+    .login-btn:hover {
+      background: #fff0f0;
+    }
+    
+    .signup-btn { 
+      background: #e23744; 
+      color: white; 
+    }
+    
+    .signup-btn:hover {
+      background: #d12e3a;
+    }
+    
+    .cart-btn, .wishlist-btn { 
+      position: relative; 
+      background: transparent; 
+      border: none; 
+      font-size: 20px; 
+      color: #282c3f; 
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    
+    .cart-btn:hover, .wishlist-btn:hover {
+      background: #f8f8f8;
+    }
+    
+    .cart-count, .wishlist-count { 
+      position: absolute; 
+      top: 0; 
+      right: 0; 
+      background: #e23744; 
+      color: white; 
+      border-radius: 50%; 
+      width: 18px; 
+      height: 18px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 11px; 
+      font-weight: 700;
+    }
+    
+    /* NAVIGATION */
+    .nav-container { 
+      background: white; 
+      padding: 0 20px; 
+      border-bottom: 1px solid #e9e9eb;
+    }
+    
+    .nav-tabs { 
+      display: flex; 
+      overflow-x: auto; 
+      scrollbar-width: none; /* Firefox */
+    }
+    
+    .nav-tabs::-webkit-scrollbar { 
+      display: none; /* Chrome, Safari, Edge */
+    }
+    
+    .nav-tab { 
+      padding: 16px 20px; 
+      font-weight: 600; 
+      color: #696969; 
+      cursor: pointer; 
+      white-space: nowrap; 
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .nav-tab:hover {
+      color: #282c3f;
+    }
+    
+    .nav-tab.active { 
+      color: #e23744; 
+      border-bottom: 3px solid #e23744;
+    }
+    
+    /* HERO SECTION */
+    .hero-section { 
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836'); 
+      background-size: cover; 
+      background-position: center; 
+      padding: 60px 20px; 
+      text-align: center; 
+      color: white;
+    }
+    
+    .hero-title { 
+      font-size: 36px; 
+      font-weight: 700; 
+      margin-bottom: 15px;
+    }
+    
+    .hero-subtitle { 
+      font-size: 18px; 
+      margin-bottom: 30px; 
+      max-width: 600px; 
+      margin-left: auto; 
+      margin-right: auto;
+    }
+    
+    .hero-search { 
+      max-width: 700px; 
+      margin: 0 auto; 
+      position: relative; 
+    }
+    
+    .hero-search input { 
+      width: 100%; 
+      padding: 15px 20px; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 16px; 
+      outline: none;
+    }
+    
+    .hero-search button { 
+      position: absolute; 
+      right: 10px; 
+      top: 50%; 
+      transform: translateY(-50%); 
+      background: #e23744; 
+      color: white; 
+      border: none; 
+      padding: 10px 20px; 
+      border-radius: 6px; 
+      font-weight: 600; 
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .hero-search button:hover {
+      background: #d12e3a;
+    }
+    
+    /* PROMOTION BANNER */
+    .promo-banner {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    
+    .promo-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    
+    .promo-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .promo-card {
+      min-width: 300px;
+      height: 150px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .promo-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .promo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .promo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 15px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+    }
+    
+    .promo-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .promo-desc {
+      font-size: 14px;
+    }
+    
+    /* CATEGORIES */
+    .categories-section { 
+      padding: 30px 20px; 
+      background: white;
+    }
+    
+    .section-title { 
+      font-size: 24px; 
+      font-weight: 700; 
+      margin-bottom: 20px;
+    }
+    
+    .categories-container { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
+      gap: 20px;
+    }
+    
+    .category-card { 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .category-image { 
+      width: 80px; 
+      height: 80px; 
+      border-radius: 50%; 
+      object-fit: cover; 
+      margin-bottom: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .category-name { 
+      font-size: 14px; 
+      font-weight: 600; 
+      text-align: center;
+    }
+    
+    /* FILTERS */
+    .filters-section { 
+      padding: 20px; 
+      background: white;
+      border-top: 1px solid #e9e9eb;
+      position: sticky;
+      top: 70px;
+      z-index: 50;
+    }
+    
+    .filters-container { 
+      display: flex; 
+      gap: 15px; 
+      overflow-x: auto; 
+      scrollbar-width: none;
+    }
+    
+    .filters-container::-webkit-scrollbar { 
+      display: none;
+    }
+    
+    .filter-btn { 
+      padding: 8px 16px; 
+      border: 1px solid #d4d5d9; 
+      background: white; 
+      border-radius: 20px; 
+      font-size: 14px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    
+    .filter-btn:hover {
+      border-color: #e23744;
+      color: #e23744;
+    }
+    
+    .filter-btn.active { 
+      background: #e23744; 
+      color: white; 
+      border-color: #e23744;
+    }
+    
+    .sort-dropdown { 
+      margin-left: auto; 
+      position: relative;
+    }
+    
+    .sort-btn { 
+      padding: 8px 16px; 
+      border: 1px solid #d4d5d9; 
+      background: white; 
+      border-radius: 20px; 
+      font-size: 14px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      gap: 5px;
+    }
+    
+    .sort-options { 
+      position: absolute; 
+      top: 100%; 
+      right: 0; 
+      background: white; 
+      border: 1px solid #d4d5d9; 
+      border-radius: 8px; 
+      margin-top: 5px; 
+      overflow: hidden; 
+      display: none; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    
+    .sort-options.show { 
+      display: block; 
+    }
+    
+    .sort-option { 
+      padding: 10px 20px; 
+      cursor: pointer; 
+      transition: background 0.2s;
+    }
+    
+    .sort-option:hover { 
+      background: #f8f8f8; 
+    }
+    
+    /* RESTAURANTS */
+    .restaurants-section { 
+      padding: 0 20px 30px; 
+    }
+    
+    .restaurants-container { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      gap: 25px;
+    }
+    
+    .restaurant-card { 
+      background: white; 
+      border-radius: 12px; 
+      overflow: hidden; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08); 
+      transition: all 0.3s; 
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .restaurant-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12); 
+    }
+    
+    .restaurant-image-container { 
+      position: relative; 
+      height: 180px; 
+      overflow: hidden;
+    }
+    
+    .restaurant-image { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+      transition: transform 0.3s;
+    }
+    
+    .restaurant-card:hover .restaurant-image {
+      transform: scale(1.05);
+    }
+    
+    .promo-badge { 
+      position: absolute; 
+      top: 10px; 
+      left: 10px; 
+      background: #e23744; 
+      color: white; 
+      padding: 4px 8px; 
+      border-radius: 4px; 
+      font-size: 12px; 
+      font-weight: 600;
+    }
+    
+    .restaurant-time { 
+      position: absolute; 
+      bottom: 10px; 
+      left: 10px; 
+      background: rgba(0,0,0,0.7); 
+      color: white; 
+      padding: 4px 8px; 
+      border-radius: 4px; 
+      font-size: 12px; 
+      font-weight: 600;
+    }
+    
+    .restaurant-content { 
+      padding: 15px; 
+    }
+    
+    .restaurant-name { 
+      font-size: 18px; 
+      font-weight: 700; 
+      margin-bottom: 5px;
+    }
+    
+    .restaurant-food { 
+      color: #696969; 
+      font-size: 14px; 
+      margin-bottom: 8px;
+    }
+    
+    .restaurant-info { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+    }
+    
+    .restaurant-rating { 
+      display: flex; 
+      align-items: center; 
+      background: #48c479; 
+      color: white; 
+      padding: 4px 6px; 
+      border-radius: 6px; 
+      font-size: 12px; 
+      font-weight: 600;
+    }
+    
+    .restaurant-rating i { 
+      margin-right: 3px; 
+      font-size: 10px;
+    }
+    
+    .restaurant-price { 
+      color: #696969; 
+      font-size: 14px; 
+      font-weight: 600;
+    }
+    
+    .wishlist-btn-card {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    
+    .wishlist-btn-card:hover {
+      transform: scale(1.1);
+    }
+    
+    .wishlist-btn-card.active {
+      color: #e23744;
+    }
+    
+    /* FOOD RECOMMENDATIONS */
+    .food-recommendations {
+      padding: 30px 20px;
+      background: white;
+      margin-top: 20px;
+    }
+    
+    .food-items-container {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    
+    .food-items-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .food-item-card {
+      min-width: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .food-item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .food-item-image {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    
+    .food-item-content {
+      padding: 12px;
+    }
+    
+    .food-item-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .food-item-price {
+      color: #e23744;
+      font-weight: 600;
+    }
+    
+    .food-item-rating {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: #696969;
+      margin-top: 5px;
+    }
+    
+    .food-item-rating i {
+      color: #48c479;
+      margin-right: 3px;
+    }
+    
+    .food-item-wishlist {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+    }
+    
+    .food-item-wishlist:hover {
+      transform: scale(1.1);
+    }
+    
+    .food-item-wishlist.active {
+      color: #e23744;
+    }
+    
+    /* SEARCH RESULTS SECTION */
+    .search-results-section {
+      padding: 20px;
+      background: white;
+      margin-bottom: 20px;
+    }
+    
+    .search-results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .search-results-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .search-results-tabs {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .search-tab {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #f8f8f8;
+      color: #696969;
+      transition: all 0.2s;
+    }
+    
+    .search-tab.active {
+      background: #e23744;
+      color: white;
+    }
+    
+    .search-results-content {
+      display: none;
+    }
+    
+    .search-results-content.active {
+      display: block;
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 40px 20px;
+      color: #696969;
+    }
+    
+    .no-results i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #d4d5d9;
+    }
+    
+    /* MODALS */
+    .modal { 
+      display: none; 
+      position: fixed; 
+      z-index: 1000; 
+      left: 0; 
+      top: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: rgba(0,0,0,0.7); 
+      overflow-y: auto;
+    }
+    
+    .modal-content { 
+      background: white; 
+      width: 90%; 
+      max-width: 500px; 
+      margin: 50px auto; 
+      padding: 25px; 
+      border-radius: 12px; 
+      position: relative; 
+      animation: modalFadeIn 0.3s;
+    }
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-content input, .modal-content select { 
+      width: 100%; 
+      padding: 12px; 
+      margin: 10px 0; 
+      border: 1px solid #d4d5d9; 
+      border-radius: 6px; 
+      font-size: 14px;
+      outline: none;
+    }
+    
+    .modal-content input:focus, .modal-content select:focus {
+      border-color: #e23744;
+    }
+    
+    .modal-title { 
+      font-size: 24px; 
+      font-weight: 700; 
+      margin-bottom: 20px; 
+      color: #282c3f;
+    }
+    
+    .close { 
+      position: absolute; 
+      right: 15px; 
+      top: 15px; 
+      font-size: 24px; 
+      cursor: pointer; 
+      color: #696969;
+      transition: color 0.2s;
+    }
+    
+    .close:hover {
+      color: #282c3f;
+    }
+    
+    .btn-primary { 
+      background: #e23744; 
+      color: white; 
+      border: none; 
+      width: 100%; 
+      padding: 15px; 
+      border-radius: 6px; 
+      font-size: 16px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    
+    .btn-primary:hover {
+      background: #d12e3a;
+    }
+    
+    /* CART MODAL */
+    .cart-item { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 15px 0; 
+      border-bottom: 1px solid #e9e9eb;
+    }
+    
+    .cart-item-info { 
+      flex: 1; 
+    }
+    
+    .cart-item-name { 
+      font-weight: 600; 
+      margin-bottom: 5px;
+    }
+    
+    .cart-item-price { 
+      color: #696969; 
+      font-size: 14px;
+    }
+    
+    .cart-item-quantity { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    
+    .quantity-btn { 
+      width: 30px; 
+      height: 30px; 
+      border: 1px solid #d4d5d9; 
+      background: white; 
+      border-radius: 50%; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .quantity-btn:hover {
+      border-color: #e23744;
+      color: #e23744;
+    }
+    
+    .cart-total { 
+      font-size: 18px; 
+      font-weight: 700; 
+      margin-top: 20px; 
+      text-align: right;
+    }
+    
+    .cart-actions { 
+      display: flex; 
+      gap: 10px; 
+      margin-top: 20px;
+    }
+    
+    .cart-actions button { 
+      flex: 1; 
+      padding: 12px; 
+      border: none; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .checkout-btn { 
+      background: #e23744; 
+      color: white;
+    }
+    
+    .checkout-btn:hover {
+      background: #d12e3a;
+    }
+    
+    .clear-cart-btn { 
+      background: #f8f8f8; 
+      color: #696969;
+    }
+    
+    .clear-cart-btn:hover {
+      background: #efefef;
+    }
+    
+    /* PAYMENT OPTIONS - MODIFIED FOR COD ONLY */
+    .payment-options {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+    
+    .payment-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #d4d5d9;
+      border-radius: 8px;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .payment-option:hover {
+      border-color: #e23744;
+    }
+    
+    .payment-option.selected {
+      border-color: #e23744;
+      background: #fff0f0;
+    }
+    
+    .payment-icon {
+      font-size: 24px;
+      margin-bottom: 5px;
+      color: #696969;
+    }
+    
+    .payment-option.selected .payment-icon {
+      color: #e23744;
+    }
+    
+    .payment-label {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    /* SEARCH RESULTS */
+    .search-results { 
+      padding: 10px 30px; 
+      background: #f8f8f8; 
+      margin-bottom: 10px; 
+      font-size: 14px;
+    }
+    
+    /* FOOTER */
+    footer { 
+      background: #2d2d2d; 
+      color: white; 
+      text-align: center; 
+      padding: 30px 20px; 
+      margin-top: 50px;
+    }
+    
+    .footer-content { 
+      max-width: 1200px; 
+      margin: 0 auto;
+    }
+    
+    .footer-links { 
+      display: flex; 
+      justify-content: center; 
+      gap: 20px; 
+      margin-bottom: 20px; 
+      flex-wrap: wrap;
+    }
+    
+    .footer-link { 
+      color: #a8a8a8; 
+      text-decoration: none; 
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    
+    .footer-link:hover {
+      color: white;
+    }
+    
+    .social-icons { 
+      display: flex; 
+      justify-content: center; 
+      gap: 15px; 
+      margin-bottom: 20px;
+    }
+    
+    .social-icon { 
+      width: 36px; 
+      height: 36px; 
+      background: #444; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: white;
+      transition: background 0.2s;
+    }
+    
+    .social-icon:hover {
+      background: #e23744;
+    }
+    
+    .app-download {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .app-download-btn {
+      height: 45px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .app-download-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .copyright { 
+      color: #a8a8a8; 
+      font-size: 14px;
+    }
+    
+    /* LOADING */
+    .loader { 
+      border: 4px solid #f3f3f3; 
+      border-top: 4px solid #e23744; 
+      border-radius: 50%; 
+      width: 40px; 
+      height: 40px; 
+      animation: spin 1s linear infinite; 
+      margin: 20px auto;
+    }
+    
+    @keyframes spin { 
+      0% { transform: rotate(0deg); } 
+      100% { transform: rotate(360deg); } 
+    }
+    
+    /* TOAST NOTIFICATION */
+    .toast { 
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      background: #282c3f; 
+      color: white; 
+      padding: 15px 20px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+      display: none; 
+      z-index: 1000;
+      animation: slideIn 0.3s, slideOut 0.3s 2.7s;
+    }
+    
+    @keyframes slideIn { 
+      from { transform: translateX(100%); } 
+      to { transform: translateX(0); } 
+    }
+    
+    @keyframes slideOut { 
+      from { transform: translateX(0); } 
+      to { transform: translateX(100%); } 
+    }
+    
+    /* ORDER CONFIRMATION */
+    .order-confirmation {
+      background: #f8f8f8;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: center;
+      display: none;
+    }
+    
+    .order-confirmation.show {
+      display: block;
+    }
+    
+    .order-confirmation h3 {
+      color: #e23744;
+      margin-bottom: 10px;
+    }
+    
+    .order-confirmation p {
+      margin-bottom: 5px;
+    }
+    
+    .order-confirmation .order-id {
+      font-weight: 700;
+      color: #282c3f;
+    }
+    
+    /* ORDER TRACKING */
+    .order-tracking {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    
+    .tracking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .tracking-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .tracking-status {
+      color: #48c479;
+      font-weight: 600;
+    }
+    
+    .tracking-timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    .tracking-timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: #e9e9eb;
+    }
+    
+    .tracking-step {
+      position: relative;
+      padding-bottom: 20px;
+    }
+    
+    .tracking-step:last-child {
+      padding-bottom: 0;
+    }
+    
+    .tracking-step::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e9e9eb;
+    }
+    
+    .tracking-step.completed::before {
+      background: #48c479;
+    }
+    
+    .tracking-step.active::before {
+      background: #e23744;
+      box-shadow: 0 0 0 4px rgba(226, 55, 68, 0.2);
+    }
+    
+    .tracking-time {
+      font-size: 12px;
+      color: #696969;
+      margin-bottom: 5px;
+    }
+    
+    .tracking-text {
+      font-weight: 600;
+    }
+    
+    /* WISHLIST MODAL */
+    .wishlist-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e9e9eb;
+    }
+    
+    .wishlist-item-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .wishlist-item-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    
+    .wishlist-item-details {
+      flex: 1;
+    }
+    
+    .wishlist-item-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .wishlist-item-restaurant {
+      color: #696969;
+      font-size: 14px;
+    }
+    
+    .wishlist-item-price {
+      color: #e23744;
+      font-weight: 600;
+    }
+    
+    .wishlist-remove-btn {
+      background: transparent;
+      border: none;
+      color: #696969;
+      cursor: pointer;
+      font-size: 18px;
+      transition: color 0.2s;
+    }
+    
+    .wishlist-remove-btn:hover {
+      color: #e23744;
+    }
+    
+    /* FOOD ITEM DETAILS MODAL */
+    .food-item-details {
+      display: flex;
+      gap: 20px;
+    }
+    
+    .food-item-image-large {
+      width: 250px;
+      height: 250px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    
+    .food-item-info {
+      flex: 1;
+    }
+    
+    .food-item-name-large {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .food-item-restaurant-large {
+      color: #696969;
+      margin-bottom: 15px;
+    }
+    
+    .food-item-price-large {
+      font-size: 20px;
+      color: #e23744;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .food-item-description {
+      color: #696969;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .food-item-nutrition {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .nutrition-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .nutrition-values {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    
+    .nutrition-item {
+      text-align: center;
+    }
+    
+    .nutrition-value {
+      font-weight: 700;
+      font-size: 18px;
+    }
+    
+    .nutrition-label {
+      font-size: 12px;
+      color: #696969;
+    }
+    
+    .food-item-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      border: 1px solid #d4d5d9;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .quantity-selector button {
+      background: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #696969;
+    }
+    
+    .quantity-selector button:hover {
+      background: #f8f8f8;
+    }
+    
+    .quantity-value {
+      width: 40px;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    .add-to-cart-btn {
+      flex: 1;
+      background: #e23744;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .add-to-cart-btn:hover {
+      background: #d12e3a;
+    }
+    
+    /* USER REVIEWS */
+    .reviews-section {
+      margin-top: 30px;
+    }
+    
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .reviews-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .add-review-btn {
+      background: #e23744;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 15px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .review-item {
+      padding: 15px 0;
+      border-bottom: 1px solid #e9e9eb;
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .reviewer-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .reviewer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #696969;
+      font-weight: 700;
+    }
+    
+    .reviewer-name {
+      font-weight: 600;
+    }
+    
+    .review-date {
+      color: #696969;
+      font-size: 12px;
+    }
+    
+    .review-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #48c479;
+      font-weight: 600;
+    }
+    
+    .review-text {
+      color: #282c3f;
+      line-height: 1.5;
+    }
+    
+    /* ORDER HISTORY */
+    .order-history-item {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    
+    .order-history-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .order-id {
+      font-weight: 600;
+    }
+    
+    .order-date {
+      color: #696969;
+      font-size: 14px;
+    }
+    
+    .order-restaurant {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .order-items {
+      color: #696969;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .order-total {
+      font-weight: 600;
+      color: #e23744;
+    }
+    
+    .order-status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    
+    .order-status.delivered {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .order-status.processing {
+      background: #fff8e1;
+      color: #f57f17;
+    }
+    
+    .order-status.cancelled {
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    /* REVIEW FORM */
+    .review-form {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .review-form-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .rating-input {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .rating-input i {
+      font-size: 20px;
+      color: #d4d5d9;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .rating-input i:hover,
+    .rating-input i.active {
+      color: #e23744;
+    }
+    
+    .review-textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d4d5d9;
+      border-radius: 6px;
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+      margin-bottom: 10px;
+    }
+    
+    .review-submit-btn {
+      background: #e23744;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .review-submit-btn:hover {
+      background: #d12e3a;
+    }
+    
+    /* DINING OUT AND NIGHTLIFE STYLES */
+    .dining-card, .nightlife-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .dining-card:hover, .nightlife-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .dining-image-container, .nightlife-image-container {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .dining-image, .nightlife-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    
+    .dining-card:hover .dining-image, .nightlife-card:hover .nightlife-image {
+      transform: scale(1.05);
+    }
+    
+    .dining-content, .nightlife-content {
+      padding: 15px;
+    }
+    
+    .dining-name, .nightlife-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .dining-cuisine, .nightlife-type {
+      color: #696969;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .dining-info, .nightlife-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .dining-rating, .nightlife-rating {
+      display: flex;
+      align-items: center;
+      background: #48c479;
+      color: white;
+      padding: 4px 6px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .dining-rating i, .nightlife-rating i {
+      margin-right: 3px;
+      font-size: 10px;
+    }
+    
+    .dining-price, .nightlife-price {
+      color: #696969;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .dining-timing, .nightlife-timing {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .dining-features, .nightlife-features {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .feature-tag {
+      background: #f8f8f8;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #696969;
+    }
+    
+    /* WHATSAPP BUTTON */
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 40px;
+      right: 40px;
+      background-color: #25d366;
+      color: #FFF;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 30px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      background-color: #128C7E;
+    }
+    
+    /* ORDER NOTIFICATION MODAL */
+    .order-notification-modal {
+      position: fixed;
+      bottom: 100px;
+      right: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      padding: 20px;
+      width: 350px;
+      max-width: 90%;
+      transform: translateY(150%);
+      transition: transform 0.5s ease;
+      z-index: 101;
+    }
+    
+    .order-notification-modal.show {
+      transform: translateY(0);
+    }
+    
+    .notification-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .notification-icon {
+      width: 40px;
+      height: 40px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+    
+    .notification-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .notification-message {
+      margin-bottom: 15px;
+      color: #696969;
+      font-size: 14px;
+    }
+    
+    .notification-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #696969;
+    }
+    
+    /* ORDER PAGE STYLES */
+    .order-page {
+      display: none;
+      background: #f8f8f8;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .order-page.active {
+      display: block;
+    }
+    
+    .order-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    .order-details {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    
+    .order-summary {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      height: fit-content;
+    }
+    
+    .order-page-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #282c3f;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #282c3f;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d4d5d9;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    
+    .form-input:focus {
+      border-color: #e23744;
+    }
+    
+    .form-input.error {
+      border-color: #e23744;
+    }
+    
+    .error-message {
+      color: #e23744;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .error-message.show {
+      display: block;
+    }
+    
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px solid #e9e9eb;
+    }
+    
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    
+    .order-item-name {
+      font-weight: 600;
+    }
+    
+    .order-item-price {
+      color: #696969;
+    }
+    
+    .order-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    
+    .order-summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 18px;
+      padding-top: 15px;
+      border-top: 1px solid #e9e9eb;
+      margin-bottom: 20px;
+    }
+    
+    .back-btn {
+      background: #f8f8f8;
+      color: #282c3f;
+      border: 1px solid #d4d5d9;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: all 0.2s;
+    }
+    
+    .back-btn:hover {
+      background: #efefef;
+    }
+    
+    .confirm-order-btn {
+      background: #e23744;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .confirm-order-btn:hover {
+      background: #d12e3a;
+    }
+    
+    .confirm-order-btn:disabled {
+      background: #d4d5d9;
+      cursor: not-allowed;
+    }
+    
+    /* WHATSAPP AUTO-REPLY STYLES */
+    .whatsapp-reply {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .whatsapp-reply.show {
+      display: block;
+    }
+    
+    .whatsapp-reply-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #25d366;
+    }
+    
+    .whatsapp-reply-message {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .whatsapp-reply-message::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid white;
+    }
+    
+    .whatsapp-reply-time {
+      font-size: 12px;
+      color: #696969;
+      text-align: right;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-wrap: wrap;
+      }
+      
+      .search-bar {
+        width: 100%;
+        order: 3;
+        margin-top: 10px;
+      }
+      
+      .hero-title {
+        font-size: 28px;
+      }
+      
+      .hero-subtitle {
+        font-size: 16px;
+      }
+      
+      .restaurants-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .promo-container {
+        gap: 10px;
+      }
+      
+      .promo-card {
+        min-width: 250px;
+      }
+      
+      .search-results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .food-item-details {
+        flex-direction: column;
+      }
+      
+      .food-item-image-large {
+        width: 100%;
+        height: 200px;
+      }
+      
+      .payment-options {
+        flex-wrap: wrap;
+      }
+      
+      .payment-option {
+        margin-bottom: 10px;
+      }
+      
+      .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      .order-notification-modal {
+        width: 300px;
+        right: 20px;
+      }
+      
+      .order-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- MAIN PAGE -->
+  <div id="mainPage">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-top">
+        <div class="logo-container">
+          <img src="https://z-cdn-media.chatglm.cn/files/5a2f5a82-8fa2-4576-94b1-2e07dc892341.png?auth_key=1866405855-df1b7c7c84a8413aabf4ab687c170ecc-0-8d4b2a3170d17d4b19921f1ba2072d05" alt="Flavor Haven Logo" class="logo-img">
+          <div class="logo-text">Flavor Haven</div>
+        </div>
+        
+        <div class="location-selector">
+          <i class="fas fa-map-marker-alt location-icon"></i>
+          <span class="location-text">Virudhunagar</span>
+          <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+        </div>
+        
+        <div class="header-actions">
+          <div class="search-bar">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="headerSearchInput" placeholder="Search for restaurant, cuisine or a dish">
+          </div>
+          
+          <button class="login-btn" onclick="openLogin()">Log in</button>
+          <button class="signup-btn" onclick="openSignup()">Sign up</button>
+          
+          <button class="wishlist-btn" onclick="openWishlist()">
+            <i class="far fa-heart"></i>
+            <span class="wishlist-count" id="wishlistCount">0</span>
+          </button>
+          
+          <button class="cart-btn" onclick="openCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="nav-container">
+        <div class="nav-tabs">
+          <div class="nav-tab active" onclick="switchTab(this, 'delivery')">Delivery</div>
+          <div class="nav-tab" onclick="switchTab(this, 'dining')">Dining Out</div>
+          <div class="nav-tab" onclick="switchTab(this, 'nightlife')">Nightlife</div>
+          <div class="nav-tab" onclick="switchTab(this, 'orders')">Orders</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <h1 class="hero-title">Order food & groceries. Discover best restaurants.</h1>
+      <p class="hero-subtitle">From your favorite restaurants and fast food to fresh groceries, we deliver it all.</p>
+      <div class="hero-search">
+        <input type="text" id="heroSearchInput" placeholder="Search for restaurant, cuisine or a dish">
+        <button onclick="searchFood()">Search</button>
+      </div>
+    </section>
+
+    <!-- PROMOTION BANNER -->
+    <section class="promo-banner">
+      <div class="promo-container">
+        <div class="promo-card" onclick="showToast('Special offer applied!')">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="Food Offer" class="promo-img">
+          <div class="promo-overlay">
+            <div class="promo-title">50% OFF</div>
+            <div class="promo-desc">On your first order</div>
+          </div>
+        </div>
+        
+        <div class="promo-card" onclick="showToast('Free delivery applied!')">
+          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d" alt="Delivery Offer" class="promo-img">
+          <div class="promo-overlay">
+            <div class="promo-title">FREE DELIVERY</div>
+            <div class="promo-desc">On orders above ₹299</div>
+          </div>
+        </div>
+        
+        <div class="promo-card" onclick="showToast('Promo code copied!')">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0" alt="Discount Offer" class="promo-img">
+          <div class="promo-overlay">
+            <div class="promo-title">FLAT30</div>
+            <div class="promo-desc">Use code for 30% off</div>
+          </div>
+        </div>
+        
+        <div class="promo-card" onclick="showToast('Membership offer!')">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092" alt="Membership Offer" class="promo-img">
+          <div class="promo-overlay">
+            <div class="promo-title">PRO MEMBERSHIP</div>
+            <div class="promo-desc">Unlimited free delivery</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="categories-section">
+      <h2 class="section-title">What's on your mind?</h2>
+      <div class="categories-container">
+        <div class="category-card" onclick="filterByCategory('pizza')">
+          <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e" alt="Pizza" class="category-image">
+          <div class="category-name">Pizza</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('burger')">
+          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd" alt="Burger" class="category-image">
+          <div class="category-name">Burger</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('biryani')">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0" alt="Biryani" class="category-image">
+          <div class="category-name">Biryani</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('chinese')">
+          <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246" alt="Chinese" class="category-image">
+          <div class="category-name">Chinese</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('dessert')">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587" alt="Dessert" class="category-image">
+          <div class="category-name">Dessert</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('healthy')">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd" alt="Healthy Food" class="category-image">
+          <div class="category-name">Healthy Food</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('rolls')">
+          <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af" alt="Rolls" class="category-image">
+          <div class="category-name">Rolls</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('south indian')">
+          <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0" alt="South Indian" class="category-image">
+          <div class="category-name">South Indian</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('north indian')">
+          <img src="https://images.unsplash.com/photo-1585032226651-759b368d7246" alt="North Indian" class="category-image">
+          <div class="category-name">North Indian</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('sushi')">
+          <img src="https://images.unsplash.com/photo-1553621042-f6e147245754" alt="Sushi" class="category-image">
+          <div class="category-name">Sushi</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('ice cream')">
+          <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a" alt="Ice Cream" class="category-image">
+          <div class="category-name">Ice Cream</div>
+        </div>
+        
+        <div class="category-card" onclick="filterByCategory('sandwich')">
+          <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af" alt="Sandwich" class="category-image">
+          <div class="category-name">Sandwich</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH RESULTS SECTION (INITIALLY HIDDEN) -->
+    <section class="search-results-section" id="searchResultsSection" style="display: none;">
+      <div class="search-results-header">
+        <h2 class="search-results-title" id="searchResultsTitle">Search Results</h2>
+        <div class="search-results-tabs">
+          <div class="search-tab active" id="restaurantsTab" onclick="switchSearchTab('restaurants')">Restaurants</div>
+          <div class="search-tab" id="dishesTab" onclick="switchSearchTab('dishes')">Dishes</div>
+        </div>
+      </div>
+      
+      <div class="search-results-content active" id="restaurantsResults">
+        <div class="restaurants-container" id="searchRestaurantList">
+          <!-- SEARCH RESTAURANT RESULTS WILL BE INSERTED HERE -->
+        </div>
+      </div>
+      
+      <div class="search-results-content" id="dishesResults">
+        <div class="food-items-container" id="searchFoodItemsList">
+          <!-- SEARCH FOOD ITEM RESULTS WILL BE INSERTED HERE -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="filters-section" id="filtersSection">
+      <div class="filters-container">
+        <button class="filter-btn active" onclick="filterByType('all')">All</button>
+        <button class="filter-btn" onclick="filterByType('veg')">Pure Veg</button>
+        <button class="filter-btn" onclick="filterByType('nonveg')">Non-Veg</button>
+        <button class="filter-btn" onclick="filterByRating('4+')">Rating 4.0+</button>
+        <button class="filter-btn" onclick="filterByDelivery('30')">Less than 30 min</button>
+        <button class="filter-btn" onclick="filterByOffers()">Great Offers</button>
+        
+        <div class="sort-dropdown">
+          <button class="sort-btn" onclick="toggleSortOptions()">
+            <span>Sort By</span>
+            <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+          </button>
+          <div class="sort-options" id="sortOptions">
+            <div class="sort-option" onclick="sortRestaurants('rating')">Rating: High to Low</div>
+            <div class="sort-option" onclick="sortRestaurants('delivery')">Delivery Time</div>
+            <div class="sort-option" onclick="sortRestaurants('price')">Cost: Low to High</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESTAURANTS -->
+    <section class="restaurants-section" id="restaurantsSection">
+      <div class="restaurants-container" id="restaurantList">
+        <!-- RESTAURANT CARDS WILL BE INSERTED HERE BY JAVASCRIPT -->
+      </div>
+    </section>
+
+    <!-- DINING OUT SECTION (INITIALLY HIDDEN) -->
+    <section class="restaurants-section" id="diningSection" style="display: none;">
+      <div class="restaurants-container" id="diningList">
+        <!-- DINING CARDS WILL BE INSERTED HERE BY JAVASCRIPT -->
+      </div>
+    </section>
+
+    <!-- NIGHTLIFE SECTION (INITIALLY HIDDEN) -->
+    <section class="restaurants-section" id="nightlifeSection" style="display: none;">
+      <div class="restaurants-container" id="nightlifeList">
+        <!-- NIGHTLIFE CARDS WILL BE INSERTED HERE BY JAVASCRIPT -->
+      </div>
+    </section>
+
+    <!-- FOOD RECOMMENDATIONS -->
+    <section class="food-recommendations" id="foodRecommendationsSection">
+      <h2 class="section-title">Recommended for you</h2>
+      <div class="food-items-container" id="foodItemsContainer">
+        <!-- FOOD ITEMS WILL BE INSERTED HERE BY JAVASCRIPT -->
+      </div>
+    </section>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal" id="loginModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('loginModal')">&times;</span>
+        <h2 class="modal-title">Login</h2>
+        <input type="text" id="loginUsername" placeholder="Gmail Address">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button class="btn-primary" onclick="loginUser()">Login</button>
+        <p style="text-align: center; margin-top: 15px; color: #696969;">Don't have an account? <a href="#" onclick="switchToSignup()" style="color: #e23744; text-decoration: none;">Sign up</a></p>
+      </div>
+    </div>
+
+    <!-- SIGNUP MODAL -->
+    <div class="modal" id="signupModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('signupModal')">&times;</span>
+        <h2 class="modal-title">Sign Up</h2>
+        <input type="text" id="signupName" placeholder="Full Name">
+        <input type="email" id="signupEmail" placeholder="Gmail Address">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password">
+        <button class="btn-primary" onclick="signupUser()">Sign Up</button>
+        <p style="text-align: center; margin-top: 15px; color: #696969;">Already have an account? <a href="#" onclick="switchToLogin()" style="color: #e23744; text-decoration: none;">Login</a></p>
+      </div>
+    </div>
+
+    <!-- ORDER MODAL -->
+    <div class="modal" id="orderModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('orderModal')">&times;</span>
+        <h2 class="modal-title" id="orderTitle">Checkout</h2>
+        <p id="displayPrice" style="color: #e23744; font-weight: 600; font-size: 20px; margin-bottom: 20px;"></p>
+        
+        <input type="text" id="address" placeholder="Enter Delivery Address">
+        <input type="tel" id="phone" placeholder="Phone Number">
+        
+        <label style="display: block; margin: 15px 0 5px; font-weight: 600;">Payment Method</label>
+        <div class="payment-options">
+          <!-- MODIFIED: ONLY COD OPTION -->
+          <div class="payment-option" onclick="selectPayment(this, 'cod')">
+            <i class="fas fa-money-bill-wave payment-icon"></i>
+            <span class="payment-label">Cash on Delivery</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="payBtn" onclick="processPayment()">Place Order</button>
+        
+        <div class="order-confirmation" id="orderConfirmation">
+          <h3>Order Confirmed!</h3>
+          <p>Your order has been placed successfully.</p>
+          <p>Order ID: <span class="order-id" id="orderId"></span></p>
+          <p>You will receive an SMS confirmation shortly.</p>
+        </div>
+        
+        <!-- WHATSAPP AUTO-REPLY SECTION -->
+        <div class="whatsapp-reply" id="whatsappReply">
+          <div class="whatsapp-reply-title">
+            <i class="fab fa-whatsapp" style="margin-right: 5px;"></i>
+            WhatsApp Auto-Reply Sent
+          </div>
+          <div class="whatsapp-reply-message">
+            Thank you for your order! Your order has been received and is being prepared. We'll notify you when it's out for delivery. Estimated delivery time: 30-40 minutes.
+          </div>
+          <div class="whatsapp-reply-time" id="whatsappReplyTime">Just now</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal" id="cartModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('cartModal')">&times;</span>
+        <h2 class="modal-title">Your Cart</h2>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotal">Total: ₹0</div>
+        <div class="cart-actions">
+          <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+          <button class="checkout-btn" onclick="checkoutFromCart()">Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- WISHLIST MODAL -->
+    <div class="modal" id="wishlistModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('wishlistModal')">&times;</span>
+        <h2 class="modal-title">Your Wishlist</h2>
+        <div id="wishlistItems"></div>
+      </div>
+    </div>
+
+    <!-- RESTAURANT DETAILS MODAL -->
+    <div class="modal" id="restaurantModal">
+      <div class="modal-content" style="max-width: 800px;">
+        <span class="close" onclick="closeModal('restaurantModal')">&times;</span>
+        <div id="restaurantDetails"></div>
+      </div>
+    </div>
+
+    <!-- FOOD ITEM DETAILS MODAL -->
+    <div class="modal" id="foodItemModal">
+      <div class="modal-content" style="max-width: 800px;">
+        <span class="close" onclick="closeModal('foodItemModal')">&times;</span>
+        <div id="foodItemDetails"></div>
+      </div>
+    </div>
+
+    <!-- ORDER HISTORY MODAL -->
+    <div class="modal" id="orderHistoryModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal('orderHistoryModal')">&times;</span>
+        <h2 class="modal-title">Order History</h2>
+        <div id="orderHistoryItems"></div>
+      </div>
+    </div>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/916369422895" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ORDER NOTIFICATION MODAL -->
+    <div class="order-notification-modal" id="orderNotificationModal">
+      <button class="notification-close" onclick="closeOrderNotification()">&times;</button>
+      <div class="notification-header">
+        <div class="notification-icon">
+          <i class="fab fa-whatsapp" style="color: white; font-size: 20px;"></i>
+        </div>
+        <div class="notification-title">Order Confirmation</div>
+      </div>
+      <div class="notification-message" id="notificationMessage">
+        Your order has been received and will be delivered soon!
+      </div>
+      <button class="btn-primary" style="width: 100%;" onclick="trackOrder()">Track Order</button>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast"></div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-content">
+        <div class="app-download">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play" class="app-download-btn">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store" class="app-download-btn">
+        </div>
+        
+        <div class="footer-links">
+          <a href="#" class="footer-link">About Us</a>
+          <a href="#" class="footer-link">Careers</a>
+          <a href="#" class="footer-link">Terms & Conditions</a>
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Contact Us</a>
+        </div>
+        
+        <div class="social-icons">
+          <div class="social-icon"><i class="fab fa-facebook-f"></i></div>
+          <div class="social-icon"><i class="fab fa-twitter"></i></div>
+          <div class="social-icon"><i class="fab fa-instagram"></i></div>
+          <div class="social-icon"><i class="fab fa-linkedin-in"></i></div>
+        </div>
+        
+        <div class="copyright">© 2025 Flavor Haven. All rights reserved.</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ORDER PAGE -->
+  <div class="order-page" id="orderPage">
+    <div class="order-container">
+      <div class="order-details">
+        <h2 class="order-page-title">Delivery Details</h2>
+        
+        <div class="form-group">
+          <label class="form-label" for="orderAddress">Delivery Address</label>
+          <input type="text" id="orderAddress" class="form-input" placeholder="Enter your complete delivery address">
+          <div class="error-message" id="addressError">Please enter a valid delivery address (minimum 10 characters)</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="orderPhone">Phone Number</label>
+          <input type="tel" id="orderPhone" class="form-input" placeholder="Enter your 10-digit phone number">
+          <div class="error-message" id="phoneError">Please enter a valid 10-digit phone number starting with 6, 7, 8, or 9</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="orderInstructions">Delivery Instructions (Optional)</label>
+          <input type="text" id="orderInstructions" class="form-input" placeholder="Any special instructions for delivery">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Payment Method</label>
+          <div class="payment-options">
+            <!-- MODIFIED: ONLY COD OPTION -->
+            <div class="payment-option" onclick="selectPaymentOption(this, 'cod')">
+              <i class="fas fa-money-bill-wave payment-icon"></i>
+              <span class="payment-label">Cash on Delivery</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="display: flex; margin-top: 30px;">
+          <button class="back-btn" onclick="backToMainPage()">Back to Menu</button>
+          <button class="confirm-order-btn" id="confirmOrderBtn" onclick="confirmOrder()">Confirm Order</button>
+        </div>
+      </div>
+      
+      <div class="order-summary">
+        <h2 class="order-page-title">Order Summary</h2>
+        
+        <div id="orderItemsList">
+          <!-- ORDER ITEMS WILL BE INSERTED HERE BY JAVASCRIPT -->
+        </div>
+        
+        <div class="order-summary-row">
+          <span>Subtotal</span>
+          <span id="orderSubtotal">₹0</span>
+        </div>
+        
+        <div class="order-summary-row">
+          <span>Delivery Fee</span>
+          <span id="orderDeliveryFee">₹40</span>
+        </div>
+        
+        <div class="order-summary-row">
+          <span>Taxes</span>
+          <span id="orderTaxes">₹0</span>
+        </div>
+        
+        <div class="order-summary-total">
+          <span>Total</span>
+          <span id="orderTotal">₹0</span>
+        </div>
+        
+        <div style="background: #f8f8f8; padding: 15px; border-radius: 8px; margin-top: 20px;">
+          <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <i class="fas fa-clock" style="color: #e23744; margin-right: 10px;"></i>
+            <span>Estimated Delivery Time</span>
+          </div>
+          <div style="font-weight: 600;" id="estimatedDeliveryTime">30-40 minutes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // RESTAURANT DATA
+    const restaurants = [
+      {
+        id: 1,
+        name: "Burger King",
+        food: "Burgers, Fast Food",
+        type: "nonveg",
+        price: 650,
+        rating: 4.2,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1550547660-d9450f859349",
+        promo: "50% OFF",
+        cuisine: ["burger", "fast food"],
+        reviews: [
+          { name: "Rahul", rating: 4, date: "2 days ago", text: "Great burgers and quick delivery!" },
+          { name: "Priya", rating: 5, date: "1 week ago", text: "Best place for burgers in town. Highly recommend!" }
+        ]
+      },
+      {
+        id: 2,
+        name: "McDonald's",
+        food: "Fast Food",
+        type: "nonveg",
+        price: 1500,
+        rating: 4.1,
+        deliveryTime: 25,
+        image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+        promo: "",
+        cuisine: ["burger", "fast food"],
+        reviews: [
+          { name: "Amit", rating: 4, date: "3 days ago", text: "Consistent quality and fast service." },
+          { name: "Sneha", rating: 4, date: "2 weeks ago", text: "Kids love the happy meals. Good value for money." }
+        ]
+      },
+      {
+        id: 3,
+        name: "KFC",
+        food: "Fried Chicken",
+        type: "nonveg",
+        price: 900,
+        rating: 4.0,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1606755962773-d324e0a13086",
+        promo: "Buy 1 Get 1",
+        cuisine: ["chicken", "fast food"],
+        reviews: [
+          { name: "Vikram", rating: 5, date: "1 day ago", text: "Crispy chicken is amazing! Always fresh." },
+          { name: "Neha", rating: 3, date: "5 days ago", text: "Good but delivery took longer than expected." }
+        ]
+      },
+      {
+        id: 4,
+        name: "Domino's Pizza",
+        food: "Pizza",
+        type: "nonveg",
+        price: 1000,
+        rating: 4.0,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65",
+        promo: "",
+        cuisine: ["pizza", "italian"],
+        reviews: [
+          { name: "Rohit", rating: 4, date: "4 days ago", text: "Pizza was hot and delicious. Good crust." },
+          { name: "Kavita", rating: 5, date: "1 week ago", text: "Best pizza chain! Always consistent quality." }
+        ]
+      },
+      {
+        id: 5,
+        name: "Biryani Zone",
+        food: "Biryani",
+        type: "nonveg",
+        price: 850,
+        rating: 4.4,
+        deliveryTime: 40,
+        image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a",
+        promo: "30% OFF",
+        cuisine: ["biryani", "indian"],
+        reviews: [
+          { name: "Arjun", rating: 5, date: "2 days ago", text: "Authentic biryani with perfect spices!" },
+          { name: "Anjali", rating: 4, date: "3 days ago", text: "Good quantity and taste. Will order again." }
+        ]
+      },
+      {
+        id: 6,
+        name: "Hyderabadi Biryani",
+        food: "Biryani",
+        type: "nonveg",
+        price: 2000,
+        rating: 4.5,
+        deliveryTime: 45,
+        image: "https://images.unsplash.com/photo-1628294895950-9805252327bc",
+        promo: "",
+        cuisine: ["biryani", "indian"],
+        reviews: [
+          { name: "Karan", rating: 5, date: "1 day ago", text: "Just like the biryani I had in Hyderabad!" },
+          { name: "Pooja", rating: 4, date: "4 days ago", text: "Expensive but worth it for special occasions." }
+        ]
+      },
+      {
+        id: 7,
+        name: "A2B Veg",
+        food: "South Indian",
+        type: "veg",
+        price: 700,
+        rating: 4.5,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0",
+        promo: "",
+        cuisine: ["south indian", "indian", "veg"],
+        reviews: [
+          { name: "Ramesh", rating: 5, date: "3 days ago", text: "Best South Indian food in the city!" },
+          { name: "Sunita", rating: 4, date: "1 week ago", text: "Authentic flavors and good portion sizes." }
+        ]
+      },
+      {
+        id: 8,
+        name: "Chaat Corner",
+        food: "Chaat",
+        type: "veg",
+        price: 600,
+        rating: 4.3,
+        deliveryTime: 25,
+        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+        promo: "",
+        cuisine: ["chaat", "indian", "veg"],
+        reviews: [
+          { name: "Manish", rating: 4, date: "2 days ago", text: "Great chaat varieties. Pani puri is amazing!" },
+          { name: "Divya", rating: 5, date: "5 days ago", text: "Tastes just like street chaat. Love it!" }
+        ]
+      },
+      {
+        id: 9,
+        name: "Cake World",
+        food: "Bakery",
+        type: "veg",
+        price: 1500,
+        rating: 4.5,
+        deliveryTime: 40,
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587",
+        promo: "",
+        cuisine: ["dessert", "bakery", "veg"],
+        reviews: [
+          { name: "Alok", rating: 5, date: "1 day ago", text: "Ordered a birthday cake, it was beautiful and delicious!" },
+          { name: "Meera", rating: 4, date: "3 days ago", text: "Good variety of cakes and pastries." }
+        ]
+      },
+      {
+        id: 10,
+        name: "Dragon Chinese",
+        food: "Chinese",
+        type: "nonveg",
+        price: 900,
+        rating: 4.1,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1585032226651-759b368d7246",
+        promo: "",
+        cuisine: ["chinese", "asian"],
+        reviews: [
+          { name: "Raj", rating: 4, date: "2 days ago", text: "Good Chinese food. Noodles were great." },
+          { name: "Tina", rating: 4, date: "6 days ago", text: "Manchurian was delicious. Will order again." }
+        ]
+      },
+      {
+        id: 11,
+        name: "Wok Express",
+        food: "Chinese",
+        type: "veg",
+        price: 500,
+        rating: 4.2,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b",
+        promo: "",
+        cuisine: ["chinese", "asian", "veg"],
+        reviews: [
+          { name: "Vivek", rating: 4, date: "1 day ago", text: "Great veg Chinese options. Fried rice is amazing!" },
+          { name: "Swati", rating: 4, date: "4 days ago", text: "Good value for money. Portion sizes are generous." }
+        ]
+      },
+      {
+        id: 12,
+        name: "Pizza Hut",
+        food: "Pizza",
+        type: "nonveg",
+        price: 2500,
+        rating: 4.0,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+        promo: "Buy 1 Get 1",
+        cuisine: ["pizza", "italian"],
+        reviews: [
+          { name: "Sanjay", rating: 4, date: "3 days ago", text: "Classic pizzas are always good. Pan crust is my favorite." },
+          { name: "Rashmi", rating: 4, date: "1 week ago", text: "Good deals and consistent quality." }
+        ]
+      },
+      {
+        id: 13,
+        name: "Shawarma Hub",
+        food: "Arabian",
+        type: "nonveg",
+        price: 500,
+        rating: 4.3,
+        deliveryTime: 25,
+        image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d",
+        promo: "",
+        cuisine: ["shawarma", "arabian"],
+        reviews: [
+          { name: "Fahad", rating: 5, date: "2 days ago", text: "Authentic shawarma! Reminds me of home." },
+          { name: "Ayesha", rating: 4, date: "5 days ago", text: "Great taste and good portion sizes." }
+        ]
+      },
+      {
+        id: 14,
+        name: "Grill Nation",
+        food: "BBQ & Grill",
+        type: "nonveg",
+        price: 800,
+        rating: 4.4,
+        deliveryTime: 40,
+        image: "https://images.unsplash.com/photo-1598515213692-5f252f75d785",
+        promo: "",
+        cuisine: ["bbq", "grill"],
+        reviews: [
+          { name: "Rohit", rating: 5, date: "1 day ago", text: "Amazing grilled items! BBQ chicken was perfect." },
+          { name: "Nisha", rating: 4, date: "3 days ago", text: "Good quality meat and great flavors." }
+        ]
+      },
+      {
+        id: 15,
+        name: "Ice Cream Bar",
+        food: "Ice Creams",
+        type: "veg",
+        price: 500,
+        rating: 4.5,
+        deliveryTime: 20,
+        image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a",
+        promo: "",
+        cuisine: ["dessert", "ice cream", "veg"],
+        reviews: [
+          { name: "Kavya", rating: 5, date: "2 days ago", text: "Best ice cream in town! So many flavors to choose from." },
+          { name: "Aarav", rating: 4, date: "4 days ago", text: "Love their special sundaes. Great for desserts." }
+        ]
+      },
+      {
+        id: 16,
+        name: "Pasta Palace",
+        food: "Italian",
+        type: "veg",
+        price: 900,
+        rating: 4.3,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1525755662778-989d0524087e",
+        promo: "",
+        cuisine: ["pasta", "italian", "veg"],
+        reviews: [
+          { name: "Aditi", rating: 4, date: "3 days ago", text: "Creamy pasta with perfect consistency!" },
+          { name: "Rohan", rating: 4, date: "1 week ago", text: "Good Italian options. Alfredo pasta is my favorite." }
+        ]
+      },
+      {
+        id: 17,
+        name: "Seafood Shack",
+        food: "Seafood",
+        type: "nonveg",
+        price: 800,
+        rating: 4.6,
+        deliveryTime: 40,
+        image: "https://images.unsplash.com/photo-1553621042-f6e147245754",
+        promo: "",
+        cuisine: ["seafood", "fish"],
+        reviews: [
+          { name: "Kiran", rating: 5, date: "1 day ago", text: "Fresh seafood! Grilled fish was amazing." },
+          { name: "Maya", rating: 4, date: "2 days ago", text: "Good variety of seafood dishes. Prawns were delicious." }
+        ]
+      },
+      {
+        id: 18,
+        name: "Sushi House",
+        food: "Japanese",
+        type: "nonveg",
+        price: 1500,
+        rating: 4.6,
+        deliveryTime: 45,
+        image: "https://images.unsplash.com/photo-1553621042-f6e147245754",
+        promo: "",
+        cuisine: ["sushi", "japanese"],
+        reviews: [
+          { name: "Yuki", rating: 5, date: "2 days ago", text: "Authentic sushi! Fresh ingredients and perfect rice." },
+          { name: "Tara", rating: 4, date: "4 days ago", text: "Great sushi rolls. A bit expensive but worth it." }
+        ]
+      },
+      {
+        id: 19,
+        name: "Salad Garden",
+        food: "Healthy Food",
+        type: "veg",
+        price: 450,
+        rating: 4.4,
+        deliveryTime: 25,
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+        promo: "",
+        cuisine: ["salad", "healthy", "veg"],
+        reviews: [
+          { name: "Anita", rating: 5, date: "1 day ago", text: "Fresh and healthy salads! Caesar salad is my favorite." },
+          { name: "Rahul", rating: 4, date: "3 days ago", text: "Good options for health-conscious people." }
+        ]
+      },
+      {
+        id: 20,
+        name: "Ramen Master",
+        food: "Japanese",
+        type: "nonveg",
+        price: 850,
+        rating: 4.5,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624",
+        promo: "",
+        cuisine: ["ramen", "japanese"],
+        reviews: [
+          { name: "Ken", rating: 5, date: "2 days ago", text: "Authentic ramen! Broth is rich and flavorful." },
+          { name: "Mei", rating: 4, date: "5 days ago", text: "Good ramen options. Tonkotsu is the best." }
+        ]
+      },
+      {
+        id: 21,
+        name: "Thai Delight",
+        food: "Thai",
+        type: "nonveg",
+        price: 950,
+        rating: 4.6,
+        deliveryTime: 40,
+        image: "https://images.unsplash.com/photo-1563245372-f21724e3856d",
+        promo: "",
+        cuisine: ["thai", "asian"],
+        reviews: [
+          { name: "Somchai", rating: 5, date: "1 day ago", text: "Authentic Thai food! Green curry is amazing." },
+          { name: "Lily", rating: 4, date: "3 days ago", text: "Good Thai flavors. Pad Thai was delicious." }
+        ]
+      },
+      {
+        id: 22,
+        name: "Falafel Factory",
+        food: "Mediterranean",
+        type: "veg",
+        price: 550,
+        rating: 4.3,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1528658948772-eb5573e8456c",
+        promo: "",
+        cuisine: ["falafel", "mediterranean", "veg"],
+        reviews: [
+          { name: "Youssef", rating: 4, date: "2 days ago", text: "Great falafel! Hummus is creamy and delicious." },
+          { name: "Leila", rating: 4, date: "4 days ago", text: "Good Mediterranean options. Pita is fresh." }
+        ]
+      },
+      {
+        id: 23,
+        name: "Kebab Kingdom",
+        food: "Middle Eastern",
+        type: "nonveg",
+        price: 900,
+        rating: 4.5,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947",
+        promo: "",
+        cuisine: ["kebab", "middle eastern"],
+        reviews: [
+          { name: "Omar", rating: 5, date: "1 day ago", text: "Best kebabs in town! Seekh kebab is amazing." },
+          { name: "Fatima", rating: 4, date: "3 days ago", text: "Good quality meat and perfect spices." }
+        ]
+      },
+      {
+        id: 24,
+        name: "Smoothie Bowl",
+        food: "Healthy",
+        type: "veg",
+        price: 400,
+        rating: 4.4,
+        deliveryTime: 20,
+        image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38",
+        promo: "",
+        cuisine: ["smoothie", "healthy", "veg"],
+        reviews: [
+          { name: "Priya", rating: 5, date: "2 days ago", text: "Healthy and delicious! Acai bowl is my favorite." },
+          { name: "Vikram", rating: 4, date: "4 days ago", text: "Great smoothie options. Perfect for breakfast." }
+        ]
+      },
+      {
+        id: 25,
+        name: "French Bistro",
+        food: "French",
+        type: "veg",
+        price: 650,
+        rating: 4.6,
+        deliveryTime: 40,
+        image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35",
+        promo: "",
+        cuisine: ["french", "bakery", "veg"],
+        reviews: [
+          { name: "Pierre", rating: 5, date: "1 day ago", text: "Authentic French pastries! Croissants are perfect." },
+          { name: "Marie", rating: 4, date: "3 days ago", text: "Good French cuisine. Quiche was delicious." }
+        ]
+      },
+      {
+        id: 26,
+        name: "Korean BBQ",
+        food: "Korean",
+        type: "nonveg",
+        price: 1200,
+        rating: 4.5,
+        deliveryTime: 45,
+        image: "https://images.unsplash.com/photo-1559847844-5cb56390c3d0",
+        promo: "",
+        cuisine: ["korean", "bbq"],
+        reviews: [
+          { name: "Jin", rating: 5, date: "2 days ago", text: "Authentic Korean BBQ! Meat is tender and flavorful." },
+          { name: "Soo", rating: 4, date: "4 days ago", text: "Good Korean options. Kimchi is authentic." }
+        ]
+      },
+      {
+        id: 27,
+        name: "Vegan Delights",
+        food: "Vegan",
+        type: "veg",
+        price: 750,
+        rating: 4.7,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+        promo: "",
+        cuisine: ["vegan", "healthy", "veg"],
+        reviews: [
+          { name: "Maya", rating: 5, date: "1 day ago", text: "Amazing vegan options! Tofu stir fry is delicious." },
+          { name: "Ravi", rating: 4, date: "3 days ago", text: "Great vegan food. Even non-vegans would love it." }
+        ]
+      },
+      {
+        id: 28,
+        name: "Greek Corner",
+        food: "Greek",
+        type: "veg",
+        price: 600,
+        rating: 4.4,
+        deliveryTime: 35,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+        promo: "",
+        cuisine: ["greek", "mediterranean", "veg"],
+        reviews: [
+          { name: "Nikos", rating: 4, date: "2 days ago", text: "Good Greek food! Moussaka is authentic." },
+          { name: "Elena", rating: 4, date: "4 days ago", text: "Fresh salads and good feta cheese." }
+        ]
+      },
+      {
+        id: 29,
+        name: "Dumpling House",
+        food: "Chinese",
+        type: "nonveg",
+        price: 700,
+        rating: 4.5,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+        promo: "",
+        cuisine: ["dumplings", "chinese"],
+        reviews: [
+          { name: "Wei", rating: 5, date: "1 day ago", text: "Authentic dumplings! Pork dumplings are amazing." },
+          { name: "Lin", rating: 4, date: "3 days ago", text: "Good variety of dumplings. Soup dumplings are the best." }
+        ]
+      },
+      {
+        id: 30,
+        name: "Burger Barn",
+        food: "American",
+        type: "nonveg",
+        price: 850,
+        rating: 4.3,
+        deliveryTime: 30,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+        promo: "",
+        cuisine: ["burger", "american"],
+        reviews: [
+          { name: "John", rating: 4, date: "2 days ago", text: "Great American burgers! Bacon cheeseburger is amazing." },
+          { name: "Emily", rating: 4, date: "4 days ago", text: "Good burgers and fries. Portion sizes are generous." }
+        ]
+      }
+    ];
+
+    // DINING OUT DATA
+    const diningPlaces = [
+      {
+        id: 101,
+        name: "The Garden Restaurant",
+        cuisine: "Multi-cuisine",
+        price: 1200,
+        rating: 4.5,
+        timing: "11:00 AM - 11:00 PM",
+        image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
+        features: ["Outdoor Seating", "Live Music", "Family Friendly"],
+        address: "123 Main Street, Virudhunagar"
+      },
+      {
+        id: 102,
+        name: "Rooftop Lounge",
+        cuisine: "Continental",
+        price: 1500,
+        rating: 4.6,
+        timing: "5:00 PM - 1:00 AM",
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
+        features: ["Rooftop", "City View", "Cocktails"],
+        address: "456 Park Avenue, Virudhunagar"
+      },
+      {
+        id: 103,
+        name: "Spice Garden",
+        cuisine: "Indian",
+        price: 800,
+        rating: 4.3,
+        timing: "12:00 PM - 10:30 PM",
+        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
+        features: ["Traditional", "Authentic", "Vegetarian Options"],
+        address: "789 Gandhi Road, Virudhunagar"
+      },
+      {
+        id: 104,
+        name: "Sea Breeze",
+        cuisine: "Seafood",
+        price: 1800,
+        rating: 4.7,
+        timing: "11:30 AM - 11:30 PM",
+        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1",
+        features: ["Fresh Seafood", "Beach View", "Fine Dining"],
+        address: "321 Beach Road, Virudhunagar"
+      },
+      {
+        id: 105,
+        name: "Pasta Paradise",
+        cuisine: "Italian",
+        price: 1000,
+        rating: 4.4,
+        timing: "12:00 PM - 11:00 PM",
+        image: "https://images.unsplash.com/photo-1525382455947-f319bc05fb12",
+        features: ["Authentic Italian", "Wine Selection", "Cozy Ambiance"],
+        address: "654 College Street, Virudhunagar"
+      },
+      {
+        id: 106,
+        name: "Sushi Sensation",
+        cuisine: "Japanese",
+        price: 2000,
+        rating: 4.8,
+        timing: "6:00 PM - 12:00 AM",
+        image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351",
+        features: ["Sushi Bar", "Chef's Special", "Omakase"],
+        address: "987 Tech Park, Virudhunagar"
+      }
+    ];
+
+    // NIGHTLIFE DATA
+    const nightlifePlaces = [
+      {
+        id: 201,
+        name: "Skyline Bar",
+        type: "Bar & Lounge",
+        price: 1500,
+        rating: 4.5,
+        timing: "6:00 PM - 1:00 AM",
+        image: "https://images.unsplash.com/photo-1514933651103-005aec06c73b",
+        features: ["Rooftop", "Cocktails", "DJ"],
+        address: "123 High Street, Virudhunagar"
+      },
+      {
+        id: 202,
+        name: "The Night Club",
+        type: "Nightclub",
+        price: 2000,
+        rating: 4.3,
+        timing: "8:00 PM - 3:00 AM",
+        image: "https://images.unsplash.com/photo-1533174072545-f770b8d170ad",
+        features: ["Dance Floor", "Live DJ", "VIP Lounge"],
+        address: "456 Entertainment Zone, Virudhunagar"
+      },
+      {
+        id: 203,
+        name: "Whiskey Den",
+        type: "Pub",
+        price: 1200,
+        rating: 4.6,
+        timing: "5:00 PM - 12:00 AM",
+        image: "https://images.unsplash.com/photo-1551024506-0bccd828d307",
+        features: ["Whiskey Collection", "Live Sports", "Pub Grub"],
+        address: "789 Market Square, Virudhunagar"
+      },
+      {
+        id: 204,
+        name: "Brew House",
+        type: "Brewery",
+        price: 1000,
+        rating: 4.4,
+        timing: "4:00 PM - 11:00 PM",
+        image: "https://images.unsplash.com/photo-1608178398316-48f4d7b9b4c5",
+        features: ["Craft Beer", "Beer Tasting", "Brewery Tours"],
+        address: "321 Industrial Area, Virudhunagar"
+      },
+      {
+        id: 205,
+        name: "Wine Cellar",
+        type: "Wine Bar",
+        price: 1800,
+        rating: 4.7,
+        timing: "6:00 PM - 12:30 AM",
+        image: "https://images.unsplash.com/photo-1510812431405-8a4f48d23b23",
+        features: ["Wine Tasting", "Cheese Platters", "Romantic"],
+        address: "654 Heritage Street, Virudhunagar"
+      },
+      {
+        id: 206,
+        name: "The Lounge",
+        type: "Lounge Bar",
+        price: 1300,
+        rating: 4.2,
+        timing: "5:00 PM - 1:00 AM",
+        image: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9",
+        features: ["Hookah", "Soft Music", "Comfortable Seating"],
+        address: "987 Mall Road, Virudhunagar"
+      }
+    ];
+
+    // EXPANDED FOOD ITEMS DATA WITH REVIEWS
+    const foodItems = [
+      {
+        id: 1,
+        name: "Margherita Pizza",
+        price: 299,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e",
+        restaurant: "Domino's Pizza",
+        category: "pizza",
+        description: "Classic pizza with tomato sauce, mozzarella, and fresh basil",
+        nutrition: { calories: 250, protein: "10g", carbs: "30g", fat: "10g" },
+        isVeg: true,
+        reviews: [
+          { name: "Priya", rating: 5, date: "2 days ago", text: "Perfect thin crust with fresh ingredients! The basil really makes it special." },
+          { name: "Rohit", rating: 4, date: "1 week ago", text: "Good classic pizza. Could use a bit more cheese but overall great taste." }
+        ]
+      },
+      {
+        id: 2,
+        name: "Chicken Biryani",
+        price: 350,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a",
+        restaurant: "Biryani Zone",
+        category: "biryani",
+        description: "Fragrant basmati rice with spiced chicken and aromatic herbs",
+        nutrition: { calories: 450, protein: "25g", carbs: "45g", fat: "15g" },
+        isVeg: false,
+        reviews: [
+          { name: "Arjun", rating: 5, date: "1 day ago", text: "Authentic biryani with perfect spice balance! The chicken was tender and flavorful." },
+          { name: "Anjali", rating: 4, date: "3 days ago", text: "Great portion size and taste. The raita that came with it was perfect." }
+        ]
+      },
+      {
+        id: 3,
+        name: "Veg Burger",
+        price: 299,
+        rating: 4.2,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+        restaurant: "Burger King",
+        category: "burger",
+        description: "Plant-based patty with fresh vegetables and special sauce",
+        nutrition: { calories: 300, protein: "12g", carbs: "35g", fat: "12g" },
+        isVeg: true,
+        reviews: [
+          { name: "Kavita", rating: 4, date: "2 days ago", text: "Surprisingly good for a veg burger! The patty had great texture." },
+          { name: "Rahul", rating: 4, date: "1 week ago", text: "Fresh vegetables and tasty sauce. Would order again." }
+        ]
+      },
+      {
+        id: 4,
+        name: "Paneer Tikka",
+        price: 280,
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1598515213692-5f252f75d785",
+        restaurant: "Grill Nation",
+        category: "indian",
+        description: "Cubes of paneer marinated in spices and grilled to perfection",
+        nutrition: { calories: 220, protein: "15g", carbs: "10g", fat: "15g" },
+        isVeg: true,
+        reviews: [
+          { name: "Aditi", rating: 5, date: "3 days ago", text: "Perfectly marinated and grilled! The paneer was so soft and flavorful." },
+          { name: "Rohan", rating: 4, date: "1 week ago", text: "Great starter dish. The mint chutney complemented it well." }
+        ]
+      },
+      {
+        id: 5,
+        name: "Chocolate Cake",
+        price: 250,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587",
+        restaurant: "Cake World",
+        category: "dessert",
+        description: "Rich, moist chocolate cake with chocolate frosting",
+        nutrition: { calories: 350, protein: "4g", carbs: "45g", fat: "18g" },
+        isVeg: true,
+        reviews: [
+          { name: "Alok", rating: 5, date: "1 day ago", text: "Decadent and rich! Perfect for chocolate lovers. Not too sweet." },
+          { name: "Meera", rating: 4, date: "3 days ago", text: "Moist and delicious. The frosting was perfectly balanced." }
+        ]
+      },
+      {
+        id: 6,
+        name: "Sushi Platter",
+        price: 650,
+        rating: 4.8,
+        image: "https://images.unsplash.com/photo-1553621042-f6e147245754",
+        restaurant: "Sushi House",
+        category: "sushi",
+        description: "Assorted fresh sushi with wasabi and soy sauce",
+        nutrition: { calories: 300, protein: "15g", carbs: "35g", fat: "8g" },
+        isVeg: false,
+        reviews: [
+          { name: "Yuki", rating: 5, date: "2 days ago", text: "Fresh and authentic! The fish quality was excellent and the rice was perfect." },
+          { name: "Tara", rating: 5, date: "4 days ago", text: "Beautiful presentation and amazing taste. The variety was great." }
+        ]
+      },
+      {
+        id: 7,
+        name: "Pad Thai",
+        price: 320,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1563245372-f21724e3856d",
+        restaurant: "Thai Delight",
+        category: "thai",
+        description: "Stir-fried rice noodles with shrimp, tofu, and peanuts",
+        nutrition: { calories: 380, protein: "18g", carbs: "50g", fat: "12g" },
+        isVeg: false,
+        reviews: [
+          { name: "Somchai", rating: 5, date: "1 day ago", text: "Perfect balance of sweet, sour, and savory! Just like in Thailand." },
+          { name: "Lily", rating: 4, date: "3 days ago", text: "Good portion size and authentic flavors. The lime wedge added a nice touch." }
+        ]
+      },
+      {
+        id: 8,
+        name: "Falafel Wrap",
+        price: 220,
+        rating: 4.3,
+        image: "https://images.unsplash.com/photo-1528658948772-eb5573e8456c",
+        restaurant: "Falafel Factory",
+        category: "mediterranean",
+        description: "Crispy falafel balls wrapped in pita with tahini sauce",
+        nutrition: { calories: 340, protein: "12g", carbs: "40g", fat: "16g" },
+        isVeg: true,
+        reviews: [
+          { name: "Youssef", rating: 4, date: "2 days ago", text: "Crispy falafel with creamy tahini sauce. The vegetables were fresh." },
+          { name: "Leila", rating: 4, date: "4 days ago", text: "Good flavors and filling. The pita was soft and fresh." }
+        ]
+      },
+      {
+        id: 9,
+        name: "Pepperoni Pizza",
+        price: 399,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65",
+        restaurant: "Pizza Hut",
+        category: "pizza",
+        description: "Classic pizza topped with pepperoni and mozzarella cheese",
+        nutrition: { calories: 320, protein: "14g", carbs: "35g", fat: "14g" },
+        isVeg: false,
+        reviews: [
+          { name: "Sanjay", rating: 5, date: "3 days ago", text: "Perfect amount of pepperoni and cheese! The crust was crispy on the bottom." },
+          { name: "Rashmi", rating: 4, date: "1 week ago", text: "Classic favorite. Always consistent quality from Pizza Hut." }
+        ]
+      },
+      {
+        id: 10,
+        name: "Chicken Wings",
+        price: 250,
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1606755962773-d324e0a13086",
+        restaurant: "KFC",
+        category: "chicken",
+        description: "Crispy fried chicken wings with your choice of sauce",
+        nutrition: { calories: 290, protein: "20g", carbs: "8g", fat: "18g" },
+        isVeg: false,
+        reviews: [
+          { name: "Vikram", rating: 5, date: "1 day ago", text: "Crispy and juicy! The hot sauce had the perfect amount of kick." },
+          { name: "Neha", rating: 4, date: "3 days ago", text: "Good flavor and crispy. Could have been a bit spicier but still great." }
+        ]
+      },
+      {
+        id: 11,
+        name: "Veg Fried Rice",
+        price: 180,
+        rating: 4.2,
+        image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b",
+        restaurant: "Wok Express",
+        category: "chinese",
+        description: "Stir-fried rice with mixed vegetables and soy sauce",
+        nutrition: { calories: 250, protein: "6g", carbs: "45g", fat: "6g" },
+        isVeg: true,
+        reviews: [
+          { name: "Vivek", rating: 4, date: "1 day ago", text: "Good wok flavor and fresh vegetables. Not too oily." },
+          { name: "Swati", rating: 4, date: "4 days ago", text: "Comforting and tasty. Perfect portion size for one person." }
+        ]
+      },
+      {
+        id: 12,
+        name: "Mutton Biryani",
+        price: 420,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1628294895950-9805252327bc",
+        restaurant: "Hyderabadi Biryani",
+        category: "biryani",
+        description: "Traditional Hyderabadi style biryani with tender mutton",
+        nutrition: { calories: 480, protein: "28g", carbs: "48g", fat: "16g" },
+        isVeg: false,
+        reviews: [
+          { name: "Karan", rating: 5, date: "1 day ago", text: "Authentic Hyderabadi flavor! The mutton was so tender it fell off the bone." },
+          { name: "Pooja", rating: 4, date: "4 days ago", text: "Rich and aromatic. The saffron flavor was prominent in a good way." }
+        ]
+      },
+      {
+        id: 13,
+        name: "Masala Dosa",
+        price: 150,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0",
+        restaurant: "A2B Veg",
+        category: "south indian",
+        description: "Crispy rice crepe filled with spiced potato filling",
+        nutrition: { calories: 300, protein: "8g", carbs: "55g", fat: "8g" },
+        isVeg: true,
+        reviews: [
+          { name: "Ramesh", rating: 5, date: "3 days ago", text: "Perfectly crispy dosa with flavorful potato masala. The sambar was excellent." },
+          { name: "Sunita", rating: 4, date: "1 week ago", text: "Authentic South Indian taste. The chutneys were fresh and tasty." }
+        ]
+      },
+      {
+        id: 14,
+        name: "Pani Puri",
+        price: 120,
+        rating: 4.3,
+        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+        restaurant: "Chaat Corner",
+        category: "chaat",
+        description: "Hollow crispy spheres filled with spicy water and chutney",
+        nutrition: { calories: 120, protein: "2g", carbs: "20g", fat: "4g" },
+        isVeg: true,
+        reviews: [
+          { name: "Manish", rating: 4, date: "2 days ago", text: "Crispy puris with perfectly spiced water. The sweet chutney balanced the flavors." },
+          { name: "Divya", rating: 4, date: "5 days ago", text: "Just like street-side pani puri! The puris stayed crisp until the end." }
+        ]
+      },
+      {
+        id: 15,
+        name: "Vanilla Ice Cream",
+        price: 100,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a",
+        restaurant: "Ice Cream Bar",
+        category: "ice cream",
+        description: "Creamy vanilla ice cream topped with chocolate sauce",
+        nutrition: { calories: 200, protein: "3g", carbs: "25g", fat: "10g" },
+        isVeg: true,
+        reviews: [
+          { name: "Kavya", rating: 5, date: "2 days ago", text: "Smooth and creamy vanilla with rich chocolate sauce. Simple but perfect!" },
+          { name: "Aarav", rating: 4, date: "4 days ago", text: "Good quality ice cream. The vanilla flavor was natural and not artificial." }
+        ]
+      },
+      {
+        id: 16,
+        name: "Alfredo Pasta",
+        price: 320,
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1525755662778-989d0524087e",
+        restaurant: "Pasta Palace",
+        category: "italian",
+        description: "Pasta in a rich and creamy white sauce with parmesan",
+        nutrition: { calories: 420, protein: "14g", carbs: "45g", fat: "20g" },
+        isVeg: true,
+        reviews: [
+          { name: "Aditi", rating: 4, date: "3 days ago", text: "Creamy and rich sauce with perfectly cooked pasta. The parmesan was generous." },
+          { name: "Rohan", rating: 4, date: "1 week ago", text: "Classic comfort food. The garlic bread that came with it was a nice touch." }
+        ]
+      },
+      {
+        id: 17,
+        name: "Grilled Salmon",
+        price: 550,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1553621042-f6e147245754",
+        restaurant: "Seafood Shack",
+        category: "seafood",
+        description: "Fresh salmon fillet grilled with herbs and lemon",
+        nutrition: { calories: 350, protein: "30g", carbs: "5g", fat: "22g" },
+        isVeg: false,
+        reviews: [
+          { name: "Kiran", rating: 5, date: "1 day ago", text: "Perfectly grilled salmon! Flaky, moist, and seasoned just right." },
+          { name: "Maya", rating: 4, date: "2 days ago", text: "Fresh and delicious. The lemon butter sauce complemented the fish well." }
+        ]
+      },
+      {
+        id: 18,
+        name: "California Roll",
+        price: 380,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1553621042-f6e147245754",
+        restaurant: "Sushi House",
+        category: "sushi",
+        description: "Sushi roll with crab, avocado, and cucumber",
+        nutrition: { calories: 280, protein: "10g", carbs: "38g", fat: "8g" },
+        isVeg: false,
+        reviews: [
+          { name: "Yuki", rating: 4, date: "2 days ago", text: "Fresh ingredients and good rice-to-filling ratio. The avocado was perfectly ripe." },
+          { name: "Tara", rating: 5, date: "4 days ago", text: "Great for sushi beginners! Not too fishy and very fresh." }
+        ]
+      },
+      {
+        id: 19,
+        name: "Caesar Salad",
+        price: 220,
+        rating: 4.3,
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+        restaurant: "Salad Garden",
+        category: "salad",
+        description: "Crisp romaine lettuce with caesar dressing and croutons",
+        nutrition: { calories: 180, protein: "8g", carbs: "10g", fat: "12g" },
+        isVeg: true,
+        reviews: [
+          { name: "Anita", rating: 4, date: "1 day ago", text: "Fresh and crisp lettuce with creamy caesar dressing. The croutons were crunchy." },
+          { name: "Rahul", rating: 4, date: "3 days ago", text: "Good portion size and classic caesar flavor. Could use more parmesan." }
+        ]
+      },
+      {
+        id: 20,
+        name: "Spicy Ramen",
+        price: 350,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624",
+        restaurant: "Ramen Master",
+        category: "japanese",
+        description: "Japanese noodle soup with spicy broth and toppings",
+        nutrition: { calories: 450, protein: "18g", carbs: "55g", fat: "15g" },
+        isVeg: false,
+        reviews: [
+          { name: "Ken", rating: 5, date: "2 days ago", text: "Rich and flavorful broth with perfect spice level! The noodles had great texture." },
+          { name: "Mei", rating: 4, date: "4 days ago", text: "Authentic ramen experience. The soft-boiled egg was cooked perfectly." }
+        ]
+      },
+      {
+        id: 21,
+        name: "Green Curry",
+        price: 380,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1563245372-f21724e3856d",
+        restaurant: "Thai Delight",
+        category: "thai",
+        description: "Thai curry with coconut milk, vegetables, and basil",
+        nutrition: { calories: 320, protein: "10g", carbs: "25g", fat: "20g" },
+        isVeg: true,
+        reviews: [
+          { name: "Somchai", rating: 5, date: "1 day ago", text: "Creamy and aromatic curry with perfect balance of flavors. The basil was fresh." },
+          { name: "Lily", rating: 4, date: "3 days ago", text: "Good spice level and fresh vegetables. The jasmine rice that came with it was perfect." }
+        ]
+      },
+      {
+        id: 22,
+        name: "Hummus Platter",
+        price: 280,
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1528658948772-eb5573e8456c",
+        restaurant: "Falafel Factory",
+        category: "mediterranean",
+        description: "Creamy hummus served with pita bread and olives",
+        nutrition: { calories: 280, protein: "8g", carbs: "30g", fat: "14g" },
+        isVeg: true,
+        reviews: [
+          { name: "Youssef", rating: 4, date: "2 days ago", text: "Smooth and creamy hummus with good olive oil drizzle. The pita was warm and fresh." },
+          { name: "Leila", rating: 4, date: "4 days ago", text: "Generous portion of hummus with fresh vegetables. Good for sharing." }
+        ]
+      },
+      {
+        id: 23,
+        name: "Chicken Kebab",
+        price: 320,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947",
+        restaurant: "Kebab Kingdom",
+        category: "kebab",
+        description: "Marinated chicken skewers grilled with spices",
+        nutrition: { calories: 280, protein: "22g", carbs: "8g", fat: "18g" },
+        isVeg: false,
+        reviews: [
+          { name: "Omar", rating: 5, date: "1 day ago", text: "Juicy and flavorful kebabs! The marinade was perfect and the meat was tender." },
+          { name: "Fatima", rating: 4, date: "3 days ago", text: "Good spice level and grilled perfectly. The mint chutney was a great accompaniment." }
+        ]
+      },
+      {
+        id: 24,
+        name: "Berry Smoothie",
+        price: 180,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38",
+        restaurant: "Smoothie Bowl",
+        category: "healthy",
+        description: "Refreshing smoothie with mixed berries and yogurt",
+        nutrition: { calories: 150, protein: "5g", carbs: "25g", fat: "3g" },
+        isVeg: true,
+        reviews: [
+          { name: "Priya", rating: 5, date: "2 days ago", text: "Perfect blend of berries! Not too sweet and had a great creamy texture." },
+          { name: "Vikram", rating: 4, date: "4 days ago", text: "Refreshing and healthy. The chia seeds on top were a nice touch." }
+        ]
+      },
+      {
+        id: 25,
+        name: "Croissant",
+        price: 120,
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35",
+        restaurant: "French Bistro",
+        category: "bakery",
+        description: "Buttery, flaky French pastry perfect for breakfast",
+        nutrition: { calories: 230, protein: "5g", carbs: "26g", fat: "12g" },
+        isVeg: true,
+        reviews: [
+          { name: "Pierre", rating: 5, date: "1 day ago", text: "Perfectly flaky and buttery! Just like a croissant should be." },
+          { name: "Marie", rating: 4, date: "3 days ago", text: "Good quality croissant with a nice golden color. The inside was light and airy." }
+        ]
+      },
+      {
+        id: 26,
+        name: "BBQ Pork Ribs",
+        price: 650,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1559847844-5cb56390c3d0",
+        restaurant: "Korean BBQ",
+        category: "korean",
+        description: "Tender pork ribs glazed with Korean BBQ sauce",
+        nutrition: { calories: 450, protein: "30g", carbs: "20g", fat: "28g" },
+        isVeg: false,
+        reviews: [
+          { name: "Jin", rating: 5, date: "2 days ago", text: "Fall-off-the-bone tender with amazing BBQ sauce! The meat was so flavorful." },
+          { name: "Soo", rating: 4, date: "4 days ago", text: "Great Korean flavors with a perfect balance of sweet and savory." }
+        ]
+      },
+      {
+        id: 27,
+        name: "Quinoa Bowl",
+        price: 280,
+        rating: 4.6,
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd",
+        restaurant: "Vegan Delights",
+        category: "vegan",
+        description: "Nutritious quinoa with roasted vegetables and tahini",
+        nutrition: { calories: 320, protein: "12g", carbs: "40g", fat: "12g" },
+        isVeg: true,
+        reviews: [
+          { name: "Maya", rating: 5, date: "1 day ago", text: "Healthy and delicious! The roasted vegetables were perfectly cooked and seasoned." },
+          { name: "Ravi", rating: 4, date: "3 days ago", text: "Filling and nutritious. The tahini dressing tied everything together nicely." }
+        ]
+      },
+      {
+        id: 28,
+        name: "Greek Salad",
+        price: 220,
+        rating: 4.3,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+        restaurant: "Greek Corner",
+        category: "greek",
+        description: "Fresh vegetables with feta cheese and olives",
+        nutrition: { calories: 200, protein: "6g", carbs: "12g", fat: "14g" },
+        isVeg: true,
+        reviews: [
+          { name: "Nikos", rating: 4, date: "2 days ago", text: "Fresh ingredients with good quality feta. The olives added a nice briny flavor." },
+          { name: "Elena", rating: 4, date: "4 days ago", text: "Crisp vegetables and tangy dressing. The feta was creamy and salty." }
+        ]
+      },
+      {
+        id: 29,
+        name: "Steamed Dumplings",
+        price: 250,
+        rating: 4.5,
+        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+        restaurant: "Dumpling House",
+        category: "chinese",
+        description: "Delicate steamed dumplings filled with vegetables",
+        nutrition: { calories: 180, protein: "6g", carbs: "25g", fat: "6g" },
+        isVeg: true,
+        reviews: [
+          { name: "Wei", rating: 5, date: "1 day ago", text: "Delicate dumplings with flavorful filling. The dipping sauce was perfect." },
+          { name: "Lin", rating: 4, date: "3 days ago", text: "Good texture and flavor. The vegetables inside were fresh and crunchy." }
+        ]
+      },
+      {
+        id: 30,
+        name: "Cheeseburger",
+        price: 280,
+        rating: 4.4,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+        restaurant: "Burger Barn",
+        category: "burger",
+        description: "Juicy beef patty with cheese, lettuce, and special sauce",
+        nutrition: { calories: 350, protein: "20g", carbs: "30g", fat: "18g" },
+        isVeg: false,
+        reviews: [
+          { name: "John", rating: 4, date: "2 days ago", text: "Juicy burger with good cheese and fresh vegetables. The bun was soft." },
+          { name: "Emily", rating: 4, date: "4 days ago", text: "Classic cheeseburger done right. The special sauce had a nice tang." }
+        ]
+      }
+    ];
+
+    // GLOBAL VARIABLES
+    let loggedIn = false;
+    let currentUser = null;
+    let totalToPay = 0;
+    let cart = [];
+    let wishlist = [];
+    let currentFilter = 'all';
+    let currentSort = 'default';
+    let searchResults = restaurants;
+    let selectedPaymentMethod = null;
+    let isSearchMode = false;
+    let currentSearchTerm = '';
+    let orderHistory = [];
+    let userReviews = {}; // Store user reviews by food item ID
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', function() {
+      renderRestaurants(restaurants);
+      renderFoodItems(foodItems);
+      updateCartCount();
+      updateWishlistCount();
+      
+      // Add enter key event listeners for search inputs
+      document.getElementById('heroSearchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          searchFood();
+        }
+      });
+      
+      document.getElementById('headerSearchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          searchFood();
+        }
+      });
+      
+      // Load saved data from localStorage
+      loadSavedData();
+    });
+
+    // Load saved data from localStorage
+    function loadSavedData() {
+      const savedCart = localStorage.getItem('flavorHavenCart');
+      const savedWishlist = localStorage.getItem('flavorHavenWishlist');
+      const savedUser = localStorage.getItem('flavorHavenUser');
+      const savedOrderHistory = localStorage.getItem('flavorHavenOrderHistory');
+      
+      if (savedCart) cart = JSON.parse(savedCart);
+      if (savedWishlist) wishlist = JSON.parse(savedWishlist);
+      if (savedOrderHistory) orderHistory = JSON.parse(savedOrderHistory);
+      
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        loggedIn = true;
+        currentUser = user;
+        updateUserUI();
+      }
+      
+      updateCartCount();
+      updateWishlistCount();
+    }
+
+    // Save data to localStorage
+    function saveData() {
+      localStorage.setItem('flavorHavenCart', JSON.stringify(cart));
+      localStorage.setItem('flavorHavenWishlist', JSON.stringify(wishlist));
+      localStorage.setItem('flavorHavenOrderHistory', JSON.stringify(orderHistory));
+      
+      if (loggedIn && currentUser) {
+        localStorage.setItem('flavorHavenUser', JSON.stringify(currentUser));
+      }
+    }
+
+    // Update UI after login
+    function updateUserUI() {
+      document.querySelector('.header-actions').innerHTML = `
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="headerSearchInput" placeholder="Search for restaurant, cuisine or a dish">
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 5px; padding: 5px 10px; background: #f8f8f8; border-radius: 20px;">
+            <i class="fas fa-user-circle" style="color: #e23744;"></i>
+            <span style="font-weight: 600;">${currentUser.name}</span>
+          </div>
+          
+          <button class="wishlist-btn" onclick="openWishlist()">
+            <i class="far fa-heart"></i>
+            <span class="wishlist-count" id="wishlistCount">${wishlist.length}</span>
+          </button>
+          
+          <button class="cart-btn" onclick="openCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">${cart.reduce((total, item) => total + item.quantity, 0)}</span>
+          </button>
+          
+          <button class="login-btn" onclick="logoutUser()">Logout</button>
+        </div>
+      `;
+      
+      // Re-add event listener for the new search input
+      document.getElementById('headerSearchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          searchFood();
+        }
+      });
+    }
+
+    // NAVIGATION TABS
+    function switchTab(tabElement, tabName) {
+      // Remove active class from all tabs
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Add active class to clicked tab
+      tabElement.classList.add('active');
+      
+      // Show toast notification
+      showToast(`${tabName.charAt(0).toUpperCase() + tabName.slice(1)} tab selected`);
+      
+      // Exit search mode if active
+      if (isSearchMode) {
+        exitSearchMode();
+      }
+      
+      // Hide all sections
+      document.getElementById('restaurantsSection').style.display = 'none';
+      document.getElementById('diningSection').style.display = 'none';
+      document.getElementById('nightlifeSection').style.display = 'none';
+      document.getElementById('filtersSection').style.display = 'none';
+      document.getElementById('foodRecommendationsSection').style.display = 'none';
+      
+      // Show appropriate section based on tab
+      if (tabName === 'delivery') {
+        document.getElementById('restaurantsSection').style.display = 'block';
+        document.getElementById('filtersSection').style.display = 'block';
+        document.getElementById('foodRecommendationsSection').style.display = 'block';
+        renderRestaurants(restaurants);
+      } else if (tabName === 'dining') {
+        document.getElementById('diningSection').style.display = 'block';
+        renderDiningPlaces();
+      } else if (tabName === 'nightlife') {
+        document.getElementById('nightlifeSection').style.display = 'block';
+        renderNightlifePlaces();
+      } else if (tabName === 'orders') {
+        if (!loggedIn) {
+          showToast('Please login to view your orders');
+          openLogin();
+          return;
+        }
+        openOrderHistory();
+      }
+    }
+
+    // RENDER DINING PLACES
+    function renderDiningPlaces() {
+      const diningContainer = document.getElementById('diningList');
+      diningContainer.innerHTML = '';
+      
+      if (diningPlaces.length === 0) {
+        diningContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px;">
+            <div class="no-results">
+              <i class="fas fa-utensils"></i>
+              <h3>No dining places found</h3>
+              <p>Try changing your search or filters</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      diningPlaces.forEach(place => {
+        const diningCard = document.createElement('div');
+        diningCard.className = 'dining-card';
+        
+        diningCard.innerHTML = `
+          <div class="dining-image-container">
+            <img src="${place.image}" alt="${place.name}" class="dining-image">
+            <div class="dining-timing">${place.timing}</div>
+          </div>
+          <div class="dining-content">
+            <h3 class="dining-name">${place.name}</h3>
+            <div class="dining-cuisine">${place.cuisine}</div>
+            <div class="dining-info">
+              <div class="dining-rating">
+                <i class="fas fa-star"></i> ${place.rating}
+              </div>
+              <div class="dining-price">₹${place.price} for two</div>
+            </div>
+            <div class="dining-features">
+              ${place.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+            </div>
+            <div style="margin-top: 10px; color: #696969; font-size: 14px;">
+              <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>${place.address}
+            </div>
+          </div>
+        `;
+        
+        diningCard.addEventListener('click', function() {
+          openDiningDetails(place);
+        });
+        
+        diningContainer.appendChild(diningCard);
+      });
+    }
+
+    // RENDER NIGHTLIFE PLACES
+    function renderNightlifePlaces() {
+      const nightlifeContainer = document.getElementById('nightlifeList');
+      nightlifeContainer.innerHTML = '';
+      
+      if (nightlifePlaces.length === 0) {
+        nightlifeContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px;">
+            <div class="no-results">
+              <i class="fas fa-cocktail"></i>
+              <h3>No nightlife places found</h3>
+              <p>Try changing your search or filters</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      nightlifePlaces.forEach(place => {
+        const nightlifeCard = document.createElement('div');
+        nightlifeCard.className = 'nightlife-card';
+        
+        nightlifeCard.innerHTML = `
+          <div class="nightlife-image-container">
+            <img src="${place.image}" alt="${place.name}" class="nightlife-image">
+            <div class="nightlife-timing">${place.timing}</div>
+          </div>
+          <div class="nightlife-content">
+            <h3 class="nightlife-name">${place.name}</h3>
+            <div class="nightlife-type">${place.type}</div>
+            <div class="nightlife-info">
+              <div class="nightlife-rating">
+                <i class="fas fa-star"></i> ${place.rating}
+              </div>
+              <div class="nightlife-price">₹${place.price} for two</div>
+            </div>
+            <div class="nightlife-features">
+              ${place.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+            </div>
+            <div style="margin-top: 10px; color: #696969; font-size: 14px;">
+              <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>${place.address}
+            </div>
+          </div>
+        `;
+        
+        nightlifeCard.addEventListener('click', function() {
+          openNightlifeDetails(place);
+        });
+        
+        nightlifeContainer.appendChild(nightlifeCard);
+      });
+    }
+
+    // OPEN DINING DETAILS
+    function openDiningDetails(place) {
+      const modal = document.getElementById('restaurantModal');
+      const detailsContainer = document.getElementById('restaurantDetails');
+      
+      detailsContainer.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="position: relative;">
+            <img src="${place.image}" alt="${place.name}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+          </div>
+          
+          <div>
+            <h2 style="font-size: 24px; margin-bottom: 10px;">${place.name}</h2>
+            <p style="color: #696969; margin-bottom: 15px;">${place.cuisine}</p>
+            
+            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-star" style="color: #48c479;"></i>
+                <span>${place.rating} Rating</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-clock" style="color: #e23744;"></i>
+                <span>${place.timing}</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-rupee-sign" style="color: #696969;"></i>
+                <span>${place.price} for two</span>
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">About</h3>
+              <p style="color: #696969; line-height: 1.5;">Experience the best of ${place.cuisine} cuisine at ${place.name}. Our chefs use only the freshest ingredients to create dishes that will tantalize your taste buds.</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Features</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                ${place.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Location</h3>
+              <p style="color: #696969; line-height: 1.5;">
+                <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>${place.address}
+              </p>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-primary" style="flex: 1;" onclick="bookTable('${place.name}')">Book a Table</button>
+              <button class="btn-primary" style="flex: 1; background: #48c479;" onclick="showToast('Added to favorites!')">Add to Favorites</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    // OPEN NIGHTLIFE DETAILS
+    function openNightlifeDetails(place) {
+      const modal = document.getElementById('restaurantModal');
+      const detailsContainer = document.getElementById('restaurantDetails');
+      
+      detailsContainer.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="position: relative;">
+            <img src="${place.image}" alt="${place.name}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+          </div>
+          
+          <div>
+            <h2 style="font-size: 24px; margin-bottom: 10px;">${place.name}</h2>
+            <p style="color: #696969; margin-bottom: 15px;">${place.type}</p>
+            
+            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-star" style="color: #48c479;"></i>
+                <span>${place.rating} Rating</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-clock" style="color: #e23744;"></i>
+                <span>${place.timing}</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-rupee-sign" style="color: #696969;"></i>
+                <span>${place.price} for two</span>
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">About</h3>
+              <p style="color: #696969; line-height: 1.5;">Experience the vibrant nightlife at ${place.name}. With our amazing ${place.features.join(', ')}, we guarantee an unforgettable evening.</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Features</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                ${place.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Location</h3>
+              <p style="color: #696969; line-height: 1.5;">
+                <i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i>${place.address}
+              </p>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-primary" style="flex: 1;" onclick="bookTable('${place.name}')">Book a Table</button>
+              <button class="btn-primary" style="flex: 1; background: #48c479;" onclick="showToast('Added to favorites!')">Add to Favorites</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    // BOOK TABLE FUNCTION
+    function bookTable(placeName) {
+      if (!loggedIn) {
+        showToast('Please login to book a table');
+        openLogin();
+        return;
+      }
+      
+      showToast(`Table booking request sent to ${placeName}!`);
+      // In a real app, this would open a booking form or make an API call
+    }
+
+    // FILTER BY OFFERS FUNCTION
+    function filterByOffers() {
+      // Update active filter button
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Filter restaurants with promotions
+      const restaurantsWithOffers = restaurants.filter(r => r.promo && r.promo !== '');
+      searchResults = restaurantsWithOffers;
+      renderRestaurants(restaurantsWithOffers);
+      
+      showToast(`Showing ${restaurantsWithOffers.length} restaurants with special offers`);
+    }
+
+    // RENDER RESTAURANTS
+    function renderRestaurants(restaurantList, containerId = 'restaurantList') {
+      const restaurantContainer = document.getElementById(containerId);
+      restaurantContainer.innerHTML = '';
+      
+      if (restaurantList.length === 0) {
+        restaurantContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 50px 20px;">
+            <div class="no-results">
+              <i class="fas fa-search"></i>
+              <h3>No restaurants found</h3>
+              <p>Try changing your search or filters</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      restaurantList.forEach(restaurant => {
+        const restaurantCard = document.createElement('div');
+        restaurantCard.className = 'restaurant-card';
+        restaurantCard.dataset.id = restaurant.id;
+        restaurantCard.dataset.name = restaurant.name.toLowerCase();
+        restaurantCard.dataset.food = restaurant.food.toLowerCase();
+        restaurantCard.dataset.type = restaurant.type;
+        restaurantCard.dataset.price = restaurant.price;
+        restaurantCard.dataset.rating = restaurant.rating;
+        restaurantCard.dataset.deliveryTime = restaurant.deliveryTime;
+        
+        // Check if restaurant is in wishlist
+        const isInWishlist = wishlist.some(item => item.id === restaurant.id && item.type === 'restaurant');
+        
+        restaurantCard.innerHTML = `
+          <button class="wishlist-btn-card ${isInWishlist ? 'active' : ''}" onclick="toggleRestaurantWishlist(event, ${restaurant.id})">
+            <i class="${isInWishlist ? 'fas' : 'far'} fa-heart"></i>
+          </button>
+          <div class="restaurant-image-container">
+            <img src="${restaurant.image}" alt="${restaurant.name}" class="restaurant-image">
+            ${restaurant.promo ? `<div class="promo-badge">${restaurant.promo}</div>` : ''}
+            <div class="restaurant-time">${restaurant.deliveryTime} min</div>
+          </div>
+          <div class="restaurant-content">
+            <h3 class="restaurant-name">${restaurant.name}</h3>
+            <div class="restaurant-food">${restaurant.food}</div>
+            <div class="restaurant-info">
+              <div class="restaurant-rating">
+                <i class="fas fa-star"></i> ${restaurant.rating}
+              </div>
+              <div class="restaurant-price">₹${restaurant.price} for two</div>
+            </div>
+          </div>
+        `;
+        
+        restaurantCard.addEventListener('click', function(e) {
+          // Don't open details if clicking on wishlist button
+          if (!e.target.closest('.wishlist-btn-card')) {
+            openRestaurantDetails(restaurant);
+          }
+        });
+        
+        restaurantContainer.appendChild(restaurantCard);
+      });
+    }
+
+    // RENDER FOOD ITEMS
+    function renderFoodItems(items, containerId = 'foodItemsContainer') {
+      const foodItemsContainer = document.getElementById(containerId);
+      foodItemsContainer.innerHTML = '';
+      
+      if (items.length === 0) {
+        foodItemsContainer.innerHTML = `
+          <div style="width: 100%; text-align: center; padding: 50px 20px;">
+            <div class="no-results">
+              <i class="fas fa-search"></i>
+              <h3>No dishes found</h3>
+              <p>Try changing your search</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      items.forEach(item => {
+        const foodItemCard = document.createElement('div');
+        foodItemCard.className = 'food-item-card';
+        
+        // Check if item is in wishlist
+        const isInWishlist = wishlist.some(wishlistItem => wishlistItem.id === item.id && wishlistItem.type === 'food');
+        
+        foodItemCard.innerHTML = `
+          <button class="food-item-wishlist ${isInWishlist ? 'active' : ''}" onclick="toggleFoodItemWishlist(event, ${item.id})">
+            <i class="${isInWishlist ? 'fas' : 'far'} fa-heart"></i>
+          </button>
+          <img src="${item.image}" alt="${item.name}" class="food-item-image">
+          <div class="food-item-content">
+            <div class="food-item-name">${item.name}</div>
+            <div class="food-item-price">₹${item.price}</div>
+            <div class="food-item-rating">
+              <i class="fas fa-star"></i> ${item.rating} • ${item.restaurant}
+            </div>
+          </div>
+        `;
+        
+        foodItemCard.addEventListener('click', function(e) {
+          // Don't add to cart if clicking on wishlist button
+          if (!e.target.closest('.food-item-wishlist')) {
+            if (!loggedIn) {
+              showToast('Please login to add items to cart');
+              openLogin();
+              return;
+            }
+            
+            openFoodItemDetails(item);
+          }
+        });
+        
+        foodItemsContainer.appendChild(foodItemCard);
+      });
+    }
+
+    // RESTAURANT DETAILS
+    function openRestaurantDetails(restaurant) {
+      const modal = document.getElementById('restaurantModal');
+      const detailsContainer = document.getElementById('restaurantDetails');
+      
+      // Generate reviews HTML
+      let reviewsHTML = '';
+      restaurant.reviews.forEach(review => {
+        reviewsHTML += `
+          <div class="review-item">
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">${review.name.charAt(0)}</div>
+                <div>
+                  <div class="reviewer-name">${review.name}</div>
+                  <div class="review-date">${review.date}</div>
+                </div>
+              </div>
+              <div class="review-rating">
+                <i class="fas fa-star"></i> ${review.rating}
+              </div>
+            </div>
+            <div class="review-text">${review.text}</div>
+          </div>
+        `;
+      });
+      
+      detailsContainer.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="position: relative;">
+            <img src="${restaurant.image}" alt="${restaurant.name}" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+            ${restaurant.promo ? `<div style="position: absolute; top: 15px; left: 15px; background: #e23744; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600;">${restaurant.promo}</div>` : ''}
+          </div>
+          
+          <div>
+            <h2 style="font-size: 24px; margin-bottom: 10px;">${restaurant.name}</h2>
+            <p style="color: #696969; margin-bottom: 15px;">${restaurant.food}</p>
+            
+            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-star" style="color: #48c479;"></i>
+                <span>${restaurant.rating} Rating</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-clock" style="color: #e23744;"></i>
+                <span>${restaurant.deliveryTime} min</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-rupee-sign" style="color: #696969;"></i>
+                <span>${restaurant.price} for two</span>
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">About</h3>
+              <p style="color: #696969; line-height: 1.5;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3 style="margin-bottom: 10px;">Menu Highlights</h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                <div style="border: 1px solid #e9e9eb; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; gap: 10px; cursor: pointer;" onclick="openFoodItemDetails({name: 'Signature Dish', price: ${Math.floor(restaurant.price * 0.6)}, image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38', restaurant: '${restaurant.name}', description: 'Lorem ipsum dolor sit amet', nutrition: { calories: 300, protein: '15g', carbs: '30g', fat: '12g' }, isVeg: ${restaurant.type === 'veg'}})">
+                  <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px;">
+                  <div style="font-weight: 600;">Signature Dish</div>
+                  <div style="color: #696969;">Lorem ipsum dolor sit amet</div>
+                  <div style="color: #e23744; font-weight: 600;">₹${Math.floor(restaurant.price * 0.6)}</div>
+                </div>
+                <div style="border: 1px solid #e9e9eb; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; gap: 10px; cursor: pointer;" onclick="openFoodItemDetails({name: 'Popular Choice', price: ${Math.floor(restaurant.price * 0.5)}, image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e', restaurant: '${restaurant.name}', description: 'Consectetur adipiscing elit', nutrition: { calories: 280, protein: '12g', carbs: '35g', fat: '10g' }, isVeg: ${restaurant.type === 'veg'}})">
+                  <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px;">
+                  <div style="font-weight: 600;">Popular Choice</div>
+                  <div style="color: #696969;">Consectetur adipiscing elit</div>
+                  <div style="color: #e23744; font-weight: 600;">₹${Math.floor(restaurant.price * 0.5)}</div>
+                </div>
+                <div style="border: 1px solid #e9e9eb; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; gap: 10px; cursor: pointer;" onclick="openFoodItemDetails({name: 'Chef\\'s Special', price: ${Math.floor(restaurant.price * 0.7)}, image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0', restaurant: '${restaurant.name}', description: 'Nullam auctor nisl eget', nutrition: { calories: 350, protein: '18g', carbs: '40g', fat: '15g' }, isVeg: ${restaurant.type === 'veg'}})">
+                  <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px;">
+                  <div style="font-weight: 600;">Chef's Special</div>
+                  <div style="color: #696969;">Nullam auctor nisl eget</div>
+                  <div style="color: #e23744; font-weight: 600;">₹${Math.floor(restaurant.price * 0.7)}</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="reviews-section">
+              <div class="reviews-header">
+                <h3 class="reviews-title">Customer Reviews</h3>
+                <button class="add-review-btn">Add Review</button>
+              </div>
+              ${reviewsHTML}
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-primary" style="flex: 1;" onclick="openOrderPageFromRestaurant('${restaurant.name}', ${restaurant.price})">Order Now</button>
+              <button class="btn-primary" style="flex: 1; background: #48c479;" onclick="addToCartFromRestaurant('${restaurant.name}', ${restaurant.price})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    // FOOD ITEM DETAILS
+    function openFoodItemDetails(item) {
+      const modal = document.getElementById('foodItemModal');
+      const detailsContainer = document.getElementById('foodItemDetails');
+      
+      // Check if item is in cart
+      const cartItem = cart.find(cartItem => cartItem.name === item.name);
+      const quantity = cartItem ? cartItem.quantity : 1;
+      
+      // Generate reviews HTML
+      let reviewsHTML = '';
+      if (item.reviews && item.reviews.length > 0) {
+        item.reviews.forEach(review => {
+          reviewsHTML += `
+            <div class="review-item">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <div class="reviewer-avatar">${review.name.charAt(0)}</div>
+                  <div>
+                    <div class="reviewer-name">${review.name}</div>
+                    <div class="review-date">${review.date}</div>
+                  </div>
+                </div>
+                <div class="review-rating">
+                  <i class="fas fa-star"></i> ${review.rating}
+                </div>
+              </div>
+              <div class="review-text">${review.text}</div>
+            </div>
+          `;
+        });
+      } else {
+        reviewsHTML = '<p style="text-align: center; color: #696969;">No reviews yet. Be the first to review!</p>';
+      }
+      
+      // Check if user has already reviewed this item
+      const userReview = userReviews[item.id] || null;
+      
+      detailsContainer.innerHTML = `
+        <div class="food-item-details">
+          <img src="${item.image}" alt="${item.name}" class="food-item-image-large">
+          <div class="food-item-info">
+            <h2 class="food-item-name-large">${item.name}</h2>
+            <div class="food-item-restaurant-large">${item.restaurant}</div>
+            <div class="food-item-price-large">₹${item.price}</div>
+            <div class="food-item-rating">
+              <i class="fas fa-star" style="color: #48c479;"></i> ${item.rating}
+            </div>
+            <p class="food-item-description">${item.description}</p>
+            
+            <div class="food-item-nutrition">
+              <div class="nutrition-title">Nutritional Information</div>
+              <div class="nutrition-values">
+                <div class="nutrition-item">
+                  <div class="nutrition-value">${item.nutrition.calories}</div>
+                  <div class="nutrition-label">Calories</div>
+                </div>
+                <div class="nutrition-item">
+                  <div class="nutrition-value">${item.nutrition.protein}</div>
+                  <div class="nutrition-label">Protein</div>
+                </div>
+                <div class="nutrition-item">
+                  <div class="nutrition-value">${item.nutrition.carbs}</div>
+                  <div class="nutrition-label">Carbs</div>
+                </div>
+                <div class="nutrition-item">
+                  <div class="nutrition-value">${item.nutrition.fat}</div>
+                  <div class="nutrition-label">Fat</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="food-item-actions">
+              <div class="quantity-selector">
+                <button onclick="decrementQuantity()">-</button>
+                <div class="quantity-value" id="itemQuantity">${quantity}</div>
+                <button onclick="incrementQuantity()">+</button>
+              </div>
+              <button class="add-to-cart-btn" onclick="addToCartFromDetails('${item.name}', ${item.price})">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="reviews-section">
+          <div class="reviews-header">
+            <h3 class="reviews-title">Customer Reviews</h3>
+            <button class="add-review-btn" onclick="toggleReviewForm(${item.id})">Add Review</button>
+          </div>
+          
+          <div id="reviewForm-${item.id}" class="review-form" style="display: none;">
+            <div class="review-form-title">Your Review</div>
+            <div class="rating-input" id="ratingInput-${item.id}">
+              <i class="far fa-star" onclick="setRating(${item.id}, 1)"></i>
+              <i class="far fa-star" onclick="setRating(${item.id}, 2)"></i>
+              <i class="far fa-star" onclick="setRating(${item.id}, 3)"></i>
+              <i class="far fa-star" onclick="setRating(${item.id}, 4)"></i>
+              <i class="far fa-star" onclick="setRating(${item.id}, 5)"></i>
+            </div>
+            <textarea class="review-textarea" id="reviewText-${item.id}" placeholder="Share your experience with this dish..."></textarea>
+            <button class="review-submit-btn" onclick="submitReview(${item.id})">Submit Review</button>
+          </div>
+          
+          <div id="reviewsList-${item.id}">
+            ${reviewsHTML}
+          </div>
+        </div>
+      `;
+      
+      modal.style.display = 'block';
+    }
+
+    // Toggle review form
+    function toggleReviewForm(itemId) {
+      const reviewForm = document.getElementById(`reviewForm-${itemId}`);
+      reviewForm.style.display = reviewForm.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Set rating for review
+    function setRating(itemId, rating) {
+      const stars = document.querySelectorAll(`#ratingInput-${itemId} i`);
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.remove('far');
+          star.classList.add('fas', 'active');
+        } else {
+          star.classList.remove('fas', 'active');
+          star.classList.add('far');
+        }
+      });
+      
+      // Store rating in a data attribute
+      document.getElementById(`ratingInput-${itemId}`).dataset.rating = rating;
+    }
+
+    // Submit review
+    function submitReview(itemId) {
+      if (!loggedIn) {
+        showToast('Please login to submit a review');
+        openLogin();
+        return;
+      }
+      
+      const ratingElement = document.getElementById(`ratingInput-${itemId}`);
+      const rating = parseInt(ratingElement.dataset.rating) || 0;
+      const reviewText = document.getElementById(`reviewText-${itemId}`).value.trim();
+      
+      if (rating === 0) {
+        showToast('Please select a rating');
+        return;
+      }
+      
+      if (reviewText === '') {
+        showToast('Please write a review');
+        return;
+      }
+      
+      // Find the food item
+      const foodItem = foodItems.find(item => item.id === itemId);
+      if (!foodItem) return;
+      
+      // Create new review
+      const newReview = {
+        name: currentUser.name,
+        rating: rating,
+        date: "Just now",
+        text: reviewText
+      };
+      
+      // Add review to the food item
+      if (!foodItem.reviews) {
+        foodItem.reviews = [];
+      }
+      foodItem.reviews.unshift(newReview);
+      
+      // Store user review
+      userReviews[itemId] = newReview;
+      
+      // Update the food item rating (simple average)
+      const totalRating = foodItem.reviews.reduce((sum, review) => sum + review.rating, 0);
+      foodItem.rating = (totalRating / foodItem.reviews.length).toFixed(1);
+      
+      // Close the review form
+      document.getElementById(`reviewForm-${itemId}`).style.display = 'none';
+      
+      // Refresh the food item details
+      openFoodItemDetails(foodItem);
+      
+      // Show success message
+      showToast('Your review has been submitted successfully!');
+      
+      // Send SMS notification about the new review
+      sendReviewSMS(foodItem.name, newReview);
+    }
+
+    // Increment/decrement quantity in food item details
+    function incrementQuantity() {
+      const quantityElement = document.getElementById('itemQuantity');
+      quantityElement.innerText = parseInt(quantityElement.innerText) + 1;
+    }
+
+    function decrementQuantity() {
+      const quantityElement = document.getElementById('itemQuantity');
+      const currentQuantity = parseInt(quantityElement.innerText);
+      if (currentQuantity > 1) {
+        quantityElement.innerText = currentQuantity - 1;
+      }
+    }
+
+    // Add to cart from food item details
+    function addToCartFromDetails(name, price) {
+      const quantity = parseInt(document.getElementById('itemQuantity').innerText);
+      
+      for (let i = 0; i < quantity; i++) {
+        addToCart(name, price);
+      }
+      
+      closeModal('foodItemModal');
+    }
+
+    // SEARCH FUNCTIONALITY
+    function searchFood() {
+      const searchInput = document.getElementById('heroSearchInput').value.toLowerCase();
+      const headerSearchInput = document.getElementById('headerSearchInput').value.toLowerCase();
+      const searchTerm = searchInput || headerSearchInput;
+      
+      if (!searchTerm) {
+        exitSearchMode();
+        return;
+      }
+      
+      // Set search mode
+      isSearchMode = true;
+      currentSearchTerm = searchTerm;
+      
+      // Filter restaurants
+      const filteredRestaurants = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(searchTerm) || 
+               restaurant.food.toLowerCase().includes(searchTerm) ||
+               restaurant.cuisine.some(c => c.includes(searchTerm));
+      });
+      
+      // Filter food items
+      const filteredFoodItems = foodItems.filter(item => {
+        return item.name.toLowerCase().includes(searchTerm) || 
+               item.category.toLowerCase().includes(searchTerm) ||
+               item.description.toLowerCase().includes(searchTerm) ||
+               item.restaurant.toLowerCase().includes(searchTerm);
+      });
+      
+      // Update search results title
+      document.getElementById('searchResultsTitle').textContent = `Search Results for "${searchTerm}"`;
+      
+      // Show search results section
+      document.getElementById('searchResultsSection').style.display = 'block';
+      
+      // Hide regular sections
+      document.getElementById('filtersSection').style.display = 'none';
+      document.getElementById('restaurantsSection').style.display = 'none';
+      document.getElementById('diningSection').style.display = 'none';
+      document.getElementById('nightlifeSection').style.display = 'none';
+      document.getElementById('foodRecommendationsSection').style.display = 'none';
+      
+      // Render search results
+      renderRestaurants(filteredRestaurants, 'searchRestaurantList');
+      renderFoodItems(filteredFoodItems, 'searchFoodItemsList');
+      
+      // Show appropriate tab based on results
+      if (filteredRestaurants.length > 0) {
+        switchSearchTab('restaurants');
+      } else if (filteredFoodItems.length > 0) {
+        switchSearchTab('dishes');
+      }
+      
+      // Show toast with result count
+      showToast(`Found ${filteredRestaurants.length} restaurants and ${filteredFoodItems.length} dishes for "${searchTerm}"`);
+    }
+
+    // Exit search mode
+    function exitSearchMode() {
+      isSearchMode = false;
+      currentSearchTerm = '';
+      
+      // Hide search results section
+      document.getElementById('searchResultsSection').style.display = 'none';
+      
+      // Show regular sections based on active tab
+      const activeTab = document.querySelector('.nav-tab.active');
+      if (activeTab && activeTab.textContent === 'Delivery') {
+        document.getElementById('filtersSection').style.display = 'block';
+        document.getElementById('restaurantsSection').style.display = 'block';
+        document.getElementById('foodRecommendationsSection').style.display = 'block';
+      } else if (activeTab && activeTab.textContent === 'Dining Out') {
+        document.getElementById('diningSection').style.display = 'block';
+      } else if (activeTab && activeTab.textContent === 'Nightlife') {
+        document.getElementById('nightlifeSection').style.display = 'block';
+      }
+      
+      // Clear search inputs
+      document.getElementById('heroSearchInput').value = '';
+      document.getElementById('headerSearchInput').value = '';
+      
+      // Render default content
+      renderRestaurants(restaurants);
+      renderFoodItems(foodItems);
+    }
+
+    // Switch between search result tabs
+    function switchSearchTab(tab) {
+      // Update tab styles
+      document.querySelectorAll('.search-tab').forEach(searchTab => {
+        searchTab.classList.remove('active');
+      });
+      
+      // Show appropriate content
+      if (tab === 'restaurants') {
+        document.getElementById('restaurantsTab').classList.add('active');
+        document.getElementById('restaurantsResults').classList.add('active');
+        document.getElementById('dishesResults').classList.remove('active');
+      } else {
+        document.getElementById('dishesTab').classList.add('active');
+        document.getElementById('dishesResults').classList.add('active');
+        document.getElementById('restaurantsResults').classList.remove('active');
+      }
+    }
+
+    // FILTER FUNCTIONALITY
+    function filterByType(type) {
+      currentFilter = type;
+      
+      // Update active filter button
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      let filteredRestaurants = restaurants;
+      
+      if (type === 'veg') {
+        filteredRestaurants = restaurants.filter(r => r.type === 'veg');
+      } else if (type === 'nonveg') {
+        filteredRestaurants = restaurants.filter(r => r.type === 'nonveg');
+      }
+      
+      searchResults = filteredRestaurants;
+      renderRestaurants(filteredRestaurants);
+    }
+
+    function filterByRating(rating) {
+      const minRating = parseFloat(rating);
+      const filteredRestaurants = searchResults.filter(r => r.rating >= minRating);
+      renderRestaurants(filteredRestaurants);
+    }
+
+    function filterByDelivery(time) {
+      const filteredRestaurants = searchResults.filter(r => r.deliveryTime <= parseInt(time));
+      renderRestaurants(filteredRestaurants);
+    }
+
+    function filterByCategory(category) {
+      const filteredRestaurants = restaurants.filter(r => 
+        r.cuisine.some(c => c.includes(category.toLowerCase()))
+      );
+      searchResults = filteredRestaurants;
+      renderRestaurants(filteredRestaurants);
+      
+      // Scroll to restaurants section
+      document.querySelector('.restaurants-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // SORT FUNCTIONALITY
+    function toggleSortOptions() {
+      const sortOptions = document.getElementById('sortOptions');
+      sortOptions.classList.toggle('show');
+    }
+
+    function sortRestaurants(sortBy) {
+      let sortedRestaurants = [...searchResults];
+      
+      if (sortBy === 'rating') {
+        sortedRestaurants.sort((a, b) => b.rating - a.rating);
+      } else if (sortBy === 'delivery') {
+        sortedRestaurants.sort((a, b) => a.deliveryTime - b.deliveryTime);
+      } else if (sortBy === 'price') {
+        sortedRestaurants.sort((a, b) => a.price - b.price);
+      }
+      
+      currentSort = sortBy;
+      renderRestaurants(sortedRestaurants);
+      
+      // Hide sort options
+      document.getElementById('sortOptions').classList.remove('show');
+    }
+
+    // WISHLIST FUNCTIONALITY
+    function toggleRestaurantWishlist(event, restaurantId) {
+      event.stopPropagation();
+      
+      if (!loggedIn) {
+        showToast('Please login to add restaurants to wishlist');
+        openLogin();
+        return;
+      }
+      
+      const restaurant = restaurants.find(r => r.id === restaurantId);
+      const index = wishlist.findIndex(item => item.id === restaurantId && item.type === 'restaurant');
+      
+      if (index === -1) {
+        // Add to wishlist
+        wishlist.push({
+          id: restaurantId,
+          name: restaurant.name,
+          image: restaurant.image,
+          price: restaurant.price,
+          rating: restaurant.rating,
+          type: 'restaurant'
+        });
+        showToast(`${restaurant.name} added to wishlist`);
+      } else {
+        // Remove from wishlist
+        wishlist.splice(index, 1);
+        showToast(`${restaurant.name} removed from wishlist`);
+      }
+      
+      updateWishlistCount();
+      renderRestaurants(searchResults);
+      saveData();
+    }
+
+    function toggleFoodItemWishlist(event, foodItemId) {
+      event.stopPropagation();
+      
+      if (!loggedIn) {
+        showToast('Please login to add items to wishlist');
+        openLogin();
+        return;
+      }
+      
+      const foodItem = foodItems.find(f => f.id === foodItemId);
+      const index = wishlist.findIndex(item => item.id === foodItemId && item.type === 'food');
+      
+      if (index === -1) {
+        // Add to wishlist
+        wishlist.push({
+          id: foodItemId,
+          name: foodItem.name,
+          image: foodItem.image,
+          price: foodItem.price,
+          rating: foodItem.rating,
+          restaurant: foodItem.restaurant,
+          type: 'food'
+        });
+        showToast(`${foodItem.name} added to wishlist`);
+      } else {
+        // Remove from wishlist
+        wishlist.splice(index, 1);
+        showToast(`${foodItem.name} removed from wishlist`);
+      }
+      
+      updateWishlistCount();
+      renderFoodItems(foodItems);
+      saveData();
+    }
+
+    function updateWishlistCount() {
+      const count = wishlist.length;
+      const wishlistCountElement = document.getElementById('wishlistCount');
+      if (wishlistCountElement) {
+        wishlistCountElement.innerText = count;
+      }
+    }
+
+    function openWishlist() {
+      if (!loggedIn) {
+        showToast('Please login to view your wishlist');
+        openLogin();
+        return;
+      }
+      
+      const modal = document.getElementById('wishlistModal');
+      const wishlistItems = document.getElementById('wishlistItems');
+      
+      if (wishlist.length === 0) {
+        wishlistItems.innerHTML = '<p style="text-align: center; padding: 20px;">Your wishlist is empty</p>';
+      } else {
+        let html = '';
+        
+        wishlist.forEach((item, index) => {
+          if (item.type === 'restaurant') {
+            html += `
+              <div class="wishlist-item">
+                <div class="wishlist-item-info">
+                  <img src="${item.image}" alt="${item.name}" class="wishlist-item-image">
+                  <div class="wishlist-item-details">
+                    <div class="wishlist-item-name">${item.name}</div>
+                    <div class="wishlist-item-restaurant">Restaurant</div>
+                    <div class="wishlist-item-price">₹${item.price} for two</div>
+                  </div>
+                </div>
+                <button class="wishlist-remove-btn" onclick="removeFromWishlist(${index})">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            `;
+          } else {
+            html += `
+              <div class="wishlist-item">
+                <div class="wishlist-item-info">
+                  <img src="${item.image}" alt="${item.name}" class="wishlist-item-image">
+                  <div class="wishlist-item-details">
+                    <div class="wishlist-item-name">${item.name}</div>
+                    <div class="wishlist-item-restaurant">${item.restaurant}</div>
+                    <div class="wishlist-item-price">₹${item.price}</div>
+                  </div>
+                </div>
+                <button class="wishlist-remove-btn" onclick="removeFromWishlist(${index})">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            `;
+          }
+        });
+        
+        wishlistItems.innerHTML = html;
+      }
+      
+      modal.style.display = 'block';
+    }
+
+    function removeFromWishlist(index) {
+      wishlist.splice(index, 1);
+      updateWishlistCount();
+      openWishlist(); // Refresh the wishlist modal
+      renderRestaurants(searchResults);
+      renderFoodItems(foodItems);
+      saveData();
+    }
+
+    // ORDER HISTORY
+    function openOrderHistory() {
+      const modal = document.getElementById('orderHistoryModal');
+      const orderHistoryItems = document.getElementById('orderHistoryItems');
+      
+      if (orderHistory.length === 0) {
+        orderHistoryItems.innerHTML = '<p style="text-align: center; padding: 20px;">You have no order history</p>';
+      } else {
+        let html = '';
+        
+        orderHistory.forEach(order => {
+          let statusClass = '';
+          if (order.status === 'delivered') statusClass = 'delivered';
+          else if (order.status === 'processing') statusClass = 'processing';
+          else if (order.status === 'cancelled') statusClass = 'cancelled';
+          
+          html += `
+            <div class="order-history-item">
+              <div class="order-history-header">
+                <div class="order-id">Order #${order.id}</div>
+                <div class="order-date">${order.date}</div>
+              </div>
+              <div class="order-restaurant">${order.restaurant}</div>
+              <div class="order-items">${order.items.join(', ')}</div>
+              <div class="order-total">Total: ₹${order.total}</div>
+              <div class="order-status ${statusClass}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</div>
+            </div>
+          `;
+        });
+        
+        orderHistoryItems.innerHTML = html;
+      }
+      
+      modal.style.display = 'block';
+    }
+
+    // MODAL FUNCTIONS
+    function openLogin() {
+      document.getElementById('loginModal').style.display = 'block';
+    }
+
+    function openSignup() {
+      document.getElementById('signupModal').style.display = 'block';
+    }
+
+    function switchToSignup() {
+      closeModal('loginModal');
+      openSignup();
+    }
+
+    function switchToLogin() {
+      closeModal('signupModal');
+      openLogin();
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Gmail validation function
+    function isGmail(email) {
+      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      return gmailRegex.test(email);
+    }
+
+    function loginUser() {
+      const email = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!email || !password) {
+        showToast('Please enter email and password');
+        return;
+      }
+      
+      // Check if email is a valid Gmail address
+      if (!isGmail(email)) {
+        showToast('Please enter a valid Gmail address (example@gmail.com)');
+        return;
+      }
+      
+      // For demo purposes, any Gmail address with any password will work
+      // In a real application, you would verify these credentials against a database
+      loggedIn = true;
+      currentUser = { 
+        username: email, 
+        name: email.split('@')[0] // Use the part before @ as the name
+      };
+      
+      // Save user data
+      saveData();
+      
+      // Update UI
+      updateUserUI();
+      
+      closeModal('loginModal');
+      showToast('Login successful!');
+    }
+
+    function signupUser() {
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+      
+      if (!name || !email || !password || !confirmPassword) {
+        showToast('Please fill all fields');
+        return;
+      }
+      
+      // Check if email is a valid Gmail address
+      if (!isGmail(email)) {
+        showToast('Please enter a valid Gmail address (example@gmail.com)');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showToast('Passwords do not match');
+        return;
+      }
+      
+      // Simulate registration
+      loggedIn = true;
+      currentUser = { username: email, name: name };
+      
+      // Save user data
+      saveData();
+      
+      // Update UI
+      updateUserUI();
+      
+      closeModal('signupModal');
+      showToast('Registration successful!');
+    }
+
+    function logoutUser() {
+      loggedIn = false;
+      currentUser = null;
+      
+      // Clear user data from localStorage
+      localStorage.removeItem('flavorHavenUser');
+      
+      // Update UI
+      document.querySelector('.header-actions').innerHTML = `
+        <div class="search-bar">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="headerSearchInput" placeholder="Search for restaurant, cuisine or a dish">
+        </div>
+        
+        <button class="login-btn" onclick="openLogin()">Log in</button>
+        <button class="signup-btn" onclick="openSignup()">Sign up</button>
+        
+        <button class="wishlist-btn" onclick="openWishlist()">
+          <i class="far fa-heart"></i>
+          <span class="wishlist-count" id="wishlistCount">0</span>
+        </button>
+        
+        <button class="cart-btn" onclick="openCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      `;
+      
+      // Re-add event listener for the new search input
+      document.getElementById('headerSearchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          searchFood();
+        }
+      });
+      
+      showToast('Logged out successfully');
+    }
+
+    // ORDER PAGE FUNCTIONS
+    function openOrderPageFromRestaurant(name, price) {
+      if (!loggedIn) {
+        showToast('Please login to place an order');
+        openLogin();
+        return;
+      }
+      
+      // Clear any existing items in the order
+      cart = [];
+      
+      // Add a sample item to the cart for this restaurant
+      cart.push({
+        name: "Sample Item",
+        price: price,
+        quantity: 1
+      });
+      
+      // Navigate to order page
+      navigateToOrderPage();
+    }
+
+    function navigateToOrderPage() {
+      // Hide main page
+      document.getElementById('mainPage').style.display = 'none';
+      
+      // Show order page
+      document.getElementById('orderPage').classList.add('active');
+      
+      // Populate order summary
+      updateOrderSummary();
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    function backToMainPage() {
+      // Hide order page
+      document.getElementById('orderPage').classList.remove('active');
+      
+      // Show main page
+      document.getElementById('mainPage').style.display = 'block';
+    }
+
+    function updateOrderSummary() {
+      const orderItemsList = document.getElementById('orderItemsList');
+      let html = '';
+      let subtotal = 0;
+      
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        
+        html += `
+          <div class="order-item">
+            <div class="order-item-name">${item.name} x${item.quantity}</div>
+            <div class="order-item-price">₹${itemTotal}</div>
+          </div>
+        `;
+      });
+      
+      orderItemsList.innerHTML = html;
+      
+      // Calculate totals
+      const deliveryFee = 40;
+      const taxes = Math.round(subtotal * 0.05); // 5% tax
+      const total = subtotal + deliveryFee + taxes;
+      
+      // Update summary
+      document.getElementById('orderSubtotal').innerText = `₹${subtotal}`;
+      document.getElementById('orderTaxes').innerText = `₹${taxes}`;
+      document.getElementById('orderTotal').innerText = `₹${total}`;
+      
+      // Store total for order confirmation
+      totalToPay = total;
+    }
+
+    function selectPaymentOption(element, method) {
+      // Remove selected class from all options
+      document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      element.classList.add('selected');
+      selectedPaymentMethod = method;
+    }
+
+    function validateAddress(address) {
+      // Check if address is at least 10 characters long
+      if (!address || address.trim().length < 10) {
+        return false;
+      }
+      return true;
+    }
+
+    function validatePhone(phone) {
+      // Check if phone is a valid 10-digit Indian number starting with 6, 7, 8, or 9
+      const phoneRegex = /^[6-9]\d{9}$/;
+      return phoneRegex.test(phone);
+    }
+
+    function confirmOrder() {
+      const address = document.getElementById('orderAddress').value;
+      const phone = document.getElementById('orderPhone').value;
+      
+      // Reset error messages
+      document.getElementById('addressError').classList.remove('show');
+      document.getElementById('phoneError').classList.remove('show');
+      document.getElementById('orderAddress').classList.remove('error');
+      document.getElementById('orderPhone').classList.remove('error');
+      
+      // Validate address
+      if (!validateAddress(address)) {
+        document.getElementById('addressError').classList.add('show');
+        document.getElementById('orderAddress').classList.add('error');
+        return;
+      }
+      
+      // Validate phone
+      if (!validatePhone(phone)) {
+        document.getElementById('phoneError').classList.add('show');
+        document.getElementById('orderPhone').classList.add('error');
+        return;
+      }
+      
+      // Check if payment method is selected (only COD available)
+      if (!selectedPaymentMethod) {
+        showToast('Please select Cash on Delivery as payment method');
+        return;
+      }
+      
+      // Disable button to prevent multiple clicks
+      const confirmBtn = document.getElementById('confirmOrderBtn');
+      confirmBtn.disabled = true;
+      confirmBtn.innerText = 'Processing...';
+      
+      // Generate order ID
+      const orderId = 'ORD' + Math.floor(Math.random() * 1000000);
+      
+      // Create order history entry
+      const orderItems = cart.map(item => `${item.name} x${item.quantity}`);
+      const newOrder = {
+        id: orderId,
+        date: new Date().toLocaleDateString(),
+        restaurant: cart[0].name,
+        items: orderItems,
+        total: totalToPay,
+        status: 'processing'
+      };
+      
+      // Add to order history
+      orderHistory.unshift(newOrder);
+      saveData();
+      
+      // Simulate order processing
+      setTimeout(() => {
+        // Show success message
+        showToast(`Order confirmed! Your order #${orderId} will be delivered soon.`);
+        
+        // Send WhatsApp notification
+        sendWhatsAppNotification(orderId, totalToPay, address, phone, orderItems);
+        
+        // Show WhatsApp auto-reply
+        showWhatsAppAutoReply();
+        
+        // Clear cart
+        cart = [];
+        updateCartCount();
+        saveData();
+        
+        // Update order status to delivered after some time (for demo)
+        setTimeout(() => {
+          const orderIndex = orderHistory.findIndex(order => order.id === orderId);
+          if (orderIndex !== -1) {
+            orderHistory[orderIndex].status = 'delivered';
+            saveData();
+          }
+        }, 10000); // Change to delivered after 10 seconds for demo
+        
+        // Reset button
+        confirmBtn.disabled = false;
+        confirmBtn.innerText = 'Confirm Order';
+        
+        // Navigate back to main page
+        backToMainPage();
+      }, 2000);
+    }
+
+    // ORDER FUNCTIONS (ORIGINAL)
+    function openOrderFromRestaurant(name, price) {
+      if (!loggedIn) {
+        showToast('Please login to place an order');
+        openLogin();
+        return;
+      }
+      
+      totalToPay = price;
+      document.getElementById('orderTitle').innerText = `Order from ${name}`;
+      document.getElementById('displayPrice').innerText = `Amount to Pay: ₹${price}`;
+      document.getElementById('orderModal').style.display = 'block';
+      
+      // Reset payment selection (only COD available)
+      document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      selectedPaymentMethod = null;
+      
+      // Hide order confirmation
+      document.getElementById('orderConfirmation').classList.remove('show');
+    }
+
+    function addToCartFromRestaurant(name, price) {
+      if (!loggedIn) {
+        showToast('Please login to add items to cart');
+        openLogin();
+        return;
+      }
+      
+      addToCart(name, price);
+    }
+
+    function addToCart(name, price) {
+      // Check if item already exists in cart
+      const existingItem = cart.find(item => item.name === name);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({
+          name: name,
+          price: price,
+          quantity: 1
+        });
+      }
+      
+      updateCartCount();
+      saveData();
+      showToast(`${name} added to cart!`);
+    }
+
+    function selectPayment(element, method) {
+      // Remove selected class from all options
+      document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      element.classList.add('selected');
+      selectedPaymentMethod = method;
+    }
+
+    function processPayment() {
+      const address = document.getElementById('address').value;
+      const phone = document.getElementById('phone').value;
+      
+      if (!address || !phone) {
+        showToast('Please enter delivery address and phone number');
+        return;
+      }
+      
+      // Validate address and phone
+      if (!validateAddress(address) || !validatePhone(phone)) {
+        showToast('Please enter a valid address and phone number');
+        return;
+      }
+      
+      // Check if payment method is selected (only COD available)
+      if (!selectedPaymentMethod) {
+        showToast('Please select Cash on Delivery as payment method');
+        return;
+      }
+      
+      const btn = document.getElementById('payBtn');
+      btn.innerText = 'Placing Order...';
+      btn.disabled = true;
+      
+      // Generate order ID
+      const orderId = 'ORD' + Math.floor(Math.random() * 1000000);
+      
+      // Create order history entry
+      const orderItems = cart.map(item => `${item.name} x${item.quantity}`);
+      const newOrder = {
+        id: orderId,
+        date: new Date().toLocaleDateString(),
+        restaurant: document.getElementById('orderTitle').innerText.replace('Order from ', ''),
+        items: orderItems,
+        total: totalToPay,
+        status: 'processing'
+      };
+      
+      // Add to order history
+      orderHistory.unshift(newOrder);
+      saveData();
+      
+      // Simulate payment processing
+      setTimeout(() => {
+        // Show order confirmation
+        document.getElementById('orderId').innerText = orderId;
+        document.getElementById('orderConfirmation').classList.add('show');
+        
+        // Send WhatsApp notifications
+        sendWhatsAppNotification(orderId, totalToPay, address, phone, orderItems);
+        
+        // Show WhatsApp auto-reply
+        showWhatsAppAutoReply();
+        
+        showToast(`Success! Your order is confirmed.`);
+        btn.innerText = 'Place Order';
+        btn.disabled = false;
+        
+        // Show order notification modal
+        showOrderNotification(orderId);
+        
+        // Clear cart after successful order
+        setTimeout(() => {
+          cart = [];
+          updateCartCount();
+          saveData();
+          
+          // Update order status to delivered after some time (for demo)
+          setTimeout(() => {
+            const orderIndex = orderHistory.findIndex(order => order.id === orderId);
+            if (orderIndex !== -1) {
+              orderHistory[orderIndex].status = 'delivered';
+              saveData();
+            }
+          }, 10000); // Change to delivered after 10 seconds for demo
+        }, 2000);
+      }, 2000);
+    }
+
+    // WHATSAPP NOTIFICATION FUNCTION
+    function sendWhatsAppNotification(orderId, amount, address, phone, items) {
+      // Create WhatsApp message
+      const message = `🍔 *New Order Alert*\n\n` +
+                     `*Order ID:* ${orderId}\n` +
+                     `*Amount:* ₹${amount}\n` +
+                     `*Items:* ${items.join(', ')}\n` +
+                     `*Address:* ${address}\n` +
+                     `*Phone:* ${phone}\n` +
+                     `*Payment Method:* Cash on Delivery\n\n` +
+                     `Please prepare the order for delivery.`;
+      
+      // WhatsApp API URL
+      const phoneNumber = '916369422895'; // The number you specified
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      
+      // Open WhatsApp in a new tab (for demo purposes)
+      window.open(whatsappUrl, '_blank');
+      
+      // Show toast notification
+      showToast(`Order details sent to WhatsApp!`);
+    }
+
+    // SHOW WHATSAPP AUTO-REPLY
+    function showWhatsAppAutoReply() {
+      const whatsappReply = document.getElementById('whatsappReply');
+      whatsappReply.classList.add('show');
+      
+      // Update time
+      document.getElementById('whatsappReplyTime').innerText = 'Just now';
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        whatsappReply.classList.remove('show');
+      }, 5000);
+    }
+
+    // SHOW ORDER NOTIFICATION MODAL
+    function showOrderNotification(orderId) {
+      const modal = document.getElementById('orderNotificationModal');
+      const messageElement = document.getElementById('notificationMessage');
+      
+      messageElement.textContent = `Your order #${orderId} has been confirmed and will be delivered soon!`;
+      
+      modal.classList.add('show');
+      
+      // Auto-hide after 10 seconds
+      setTimeout(() => {
+        modal.classList.remove('show');
+      }, 10000);
+    }
+
+    // CLOSE ORDER NOTIFICATION
+    function closeOrderNotification() {
+      document.getElementById('orderNotificationModal').classList.remove('show');
+    }
+
+    // TRACK ORDER
+    function trackOrder() {
+      closeOrderNotification();
+      // In a real app, this would navigate to a detailed order tracking page
+      showToast('Opening order tracking...');
+    }
+
+    // CART FUNCTIONS
+    function openCart() {
+      if (!loggedIn) {
+        showToast('Please login to view cart');
+        openLogin();
+        return;
+      }
+      
+      renderCart();
+      document.getElementById('cartModal').style.display = 'block';
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align: center; padding: 20px;">Your cart is empty</p>';
+        cartTotal.innerText = 'Total: ₹0';
+        return;
+      }
+      
+      let html = '';
+      let total = 0;
+      
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        html += `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">₹${item.price} × ${item.quantity} = ₹${itemTotal}</div>
+            </div>
+            <div class="cart-item-quantity">
+              <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+              <span>${item.quantity}</span>
+              <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+              <button class="quantity-btn" onclick="removeFromCart(${index})" style="margin-left: 10px; background: #e23744; color: white; border-color: #e23744;">×</button>
+            </div>
+          </div>
+        `;
+      });
+      
+      cartItems.innerHTML = html;
+      cartTotal.innerText = `Total: ₹${total}`;
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      const cartCountElement = document.getElementById('cartCount');
+      if (cartCountElement) {
+        cartCountElement.innerText = count;
+      }
+    }
+
+    function updateQuantity(index, change) {
+      cart[index].quantity += change;
+      
+      // Remove item if quantity is 0 or less
+      if (cart[index].quantity <= 0) {
+        removeFromCart(index);
+      } else {
+        renderCart();
+        updateCartCount();
+        saveData();
+      }
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+      updateCartCount();
+      saveData();
+    }
+
+    function clearCart() {
+      cart = [];
+      renderCart();
+      updateCartCount();
+      saveData();
+      showToast('Cart cleared');
+    }
+
+    function checkoutFromCart() {
+      if (cart.length === 0) {
+        showToast('Your cart is empty!');
+        return;
+      }
+      
+      closeModal('cartModal');
+      
+      // Navigate to order page instead of opening modal
+      navigateToOrderPage();
+    }
+
+    // UTILITY FUNCTIONS
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.display = 'block';
+      
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
